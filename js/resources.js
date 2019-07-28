@@ -3,7 +3,7 @@ game.resources = [
 	 * Graphics.
 	 */
 	// the main player spritesheet
-	{name: "gripe_run_right",     type:"image",	src: "data/img/sprite/gripe_run_right.png"},
+	{name: "assbutt",     type:"image",	src: "data/img/sprite/assbutt.png"},
 	// the spinning coin spritesheet
 	{name: "spinning_coin_gold",  type:"image",	src: "data/img/sprite/spinning_coin_gold.png"},
 	// our enemty entity
