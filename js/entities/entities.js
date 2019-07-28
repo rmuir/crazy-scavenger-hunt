@@ -148,9 +148,6 @@ game.CoinEntity = me.CollectableEntity.extend(
     {
         // call the parent constructor
         this._super(me.CollectableEntity, 'init', [x, y , settings]);
-
-        // don't allow enemies to collect coins
-        this.body.setCollisionMask(me.collision.types.ENEMY_OBJECT)
     },
 
     /**
@@ -206,6 +203,9 @@ game.EnemyEntity = me.Entity.extend(
 
         // walking & jumping speed
         this.body.setVelocity(2, 6);
+
+        // no coins for enemies
+        this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
     },
 
     // manage the enemy movement
