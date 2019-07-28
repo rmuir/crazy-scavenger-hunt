@@ -6,8 +6,8 @@ game.resources = [
 	{name: "assbutt",     type:"image",	src: "data/img/sprite/assbutt.png"},
 	// the spinning coin spritesheet
 	{name: "spinning_coin_gold",  type:"image",	src: "data/img/sprite/spinning_coin_gold.png"},
-	// our enemty entity
-	{name: "wheelie_right",       type:"image",	src: "data/img/sprite/wheelie_right.png"},
+	// our enemy entity
+	{name: "possubull",       type:"image",	src: "data/img/sprite/possubull.png"},
     // game font
     { name: "PressStart2P",       type:"image", src: "data/fnt/PressStart2P.png" },
     { name: "PressStart2P",       type:"binary", src: "data/fnt/PressStart2P.fnt"},
