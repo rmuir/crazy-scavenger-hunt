@@ -13,8 +13,10 @@ python -m SimpleHTTPServer
 
 
 Here are the instructions of what we are supposed to be making:
+
 ```
 Angry birds. Flappy birds. Candy Crush. All those other games are so boring compared to GISH: The Game! Build an app game for the GISH App. It must feature a GISH mascot and integrate fully into the GISH App. Full specs for integration can be found here.```
+
 https://www.gish.com/specs/
 Official tasks of this hunt: https://docs.google.com/spreadsheets/d/1qWXADzQG-Ajarz3giAg_WU-H-nkT62H7v8L3rAijnew/edit#gid=0
 
