@@ -26,37 +26,58 @@ game.TitleScreen = me.ScreenObject.extend({
             // constructor
             init : function() {
                 this._super(me.Renderable, 'init', [0, 0, me.game.viewport.width, me.game.viewport.height]);
+                this.anchorPoint.set(0, 0);
 
                 // font for the scrolling text
-                this.font = new me.BitmapFont(me.loader.getBinary('PressStart2P'), me.loader.getImage('PressStart2P'));
+                //this.font = new me.BitmapFont(me.loader.getBinary('PressStart2P'), me.loader.getImage('PressStart2P'));
+                this.titletext = new me.Text(0, 0, {
+                    "font": "Comic Sans MS",
+                    "size": 40,
+                    "fillStyle": "#ffb366"
+                });
+                this.titletextsmall = new me.Text(0, 0, {
+                    "font": "Comic Sans MS",
+                    "size": 30,
+                    "fillStyle": "#ffb366"
+                });
+
+                this.playtext = new me.Text(0, 0, {
+                    "font": "Courier New",
+                    "size": 20,
+                    "fillStyle": "#4d4d4d"
+                });
 
                 this.scroller = "A SMALL STEP BY STEP TUTORIAL FOR GAME CREATION WITH MELONJS       ";
                 this.scrollerpos = 600;
 
                  // a tween to animate the arrow
-                this.scrollertween = new me.Tween(this).to({scrollerpos: -2200 }, 10000).onComplete(this.scrollover.bind(this)).start();
+                //this.scrollertween = new me.Tween(this).to({scrollerpos: -2200 }, 10000).onComplete(this.scrollover.bind(this)).start();
             },
 
             // some callback for the tween objects
-            scrollover : function() {
+            /*scrollover : function() {
                 // reset to default value
                 this.scrollerpos = 640;
                 this.scrollertween.to({scrollerpos: -2200 }, 10000).onComplete(this.scrollover.bind(this)).start();
-            },
+            },*/
 
             update : function (dt) {
                 return true;
             },
 
             draw : function (renderer) {
-                this.font.textAlign = "center";
-                this.font.draw(renderer, "PRESS ENTER TO PLAY", me.game.viewport.width / 2, 240);
-                this.font.textAlign = "left";
-                this.font.draw(renderer, this.scroller, this.scrollerpos, 440);
+                let left = 525;
+                let top = 100;
+                this.titletext.draw(renderer, "ADVENTURES", left, top);
+                this.titletextsmall.draw(renderer, "of", left + 120, top + 50);
+                this.titletext.draw(renderer, "ASSBUTT", left + 45, top + 100);
+                top += 200;
+                this.playtext.draw(renderer, "PRESS ENTER", left + 70, top);
+                this.playtext.draw(renderer, "TO PLAY", left + 100, top + 25);
             },
             onDestroyEvent : function() {
                 //just in case
-                this.scrollertween.stop();
+                //this.scrollertween.stop();
             }
         })), 2);
 
