@@ -12,7 +12,9 @@ game.resources = [
     { name: "PressStart2P",       type:"image", src: "data/fnt/PressStart2P.png" },
     { name: "PressStart2P",       type:"binary", src: "data/fnt/PressStart2P.fnt"},
 	// title screen
-	{name: "title_screen",        type:"image",	src: "data/img/gui/title_screen2.jpg"},
+	{name: "title_screen",        type:"image",	src: "data/img/gui/title_screen.jpg"},
+	// story screen
+	{name: "story_screen",        type:"image",	src: "data/img/gui/story_screen2.jpg"},
 	// the parallax background
 	{name: "area01_bkg0",         type:"image",	src: "data/img/area01_bkg0.png"},
 	{name: "area01_bkg1",         type:"image",	src: "data/img/area01_bkg1.png"},

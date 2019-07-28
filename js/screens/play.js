@@ -1,11 +1,11 @@
-game.PlayScreen = me.ScreenObject.extend({
+game.PlayScreen = me.Stage.extend({
 	/**	
 	 *  action to perform on state change
 	 */
 	onResetEvent: function() {	
 		
 		// play the audio track
-    me.audio.stopTrack();
+        me.audio.stopTrack();
 		me.audio.playTrack("geom-dash-blast-processing");
 		
         // load a level

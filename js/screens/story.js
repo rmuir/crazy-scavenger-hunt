@@ -1,16 +1,17 @@
-game.TitleScreen = me.Stage.extend({
+game.StoryScreen = me.Stage.extend({
 
     /**
      *  action to perform on state change
      */
     onResetEvent : function() {
 
-        me.audio.stopTrack();
-        me.audio.playTrack("geom-dash-menu");
+        //me.audio.stopTrack();
+        // TODO: need diff music for story, more somber
+        //me.audio.playTrack("geom-dash-menu");
 
         // title screen
         var backgroundImage = new me.Sprite(0, 0, {
-               image: me.loader.getImage('title_screen'),
+               image: me.loader.getImage('story_screen'),
             }
         );
 
@@ -20,7 +21,6 @@ game.TitleScreen = me.Stage.extend({
         // add to the world container
         me.game.world.addChild(backgroundImage, 1);
 
-
         // add a new renderable component with the scrolling text
         me.game.world.addChild(new (me.Renderable.extend ({
             // constructor
@@ -28,24 +28,24 @@ game.TitleScreen = me.Stage.extend({
                 this._super(me.Renderable, 'init', [0, 0, me.game.viewport.width, me.game.viewport.height]);
                 this.anchorPoint.set(0, 0);
 
-                // font for the scrolling text
-                //this.font = new me.BitmapFont(me.loader.getBinary('PressStart2P'), me.loader.getImage('PressStart2P'));
-                this.titletext = new me.Text(0, 0, {
-                    "font": "Comic Sans MS",
-                    "size": 40,
-                    "fillStyle": "#ffb366"
-                });
-                this.titletextsmall = new me.Text(0, 0, {
+                this.story = [
+                    "Evil Ryan the teetotaler has stolen all of Assbutt's",
+                    "beer and hidden them throughout the Evil big Corp",
+                    "Kingdom. Help assbutt retrieve his beers and show",
+                    "Ryan the teetotaler the error of his ways."
+                ];
+
+                this.font = new me.Text(0, 0, {
                     "font": "Comic Sans MS",
                     "size": 30,
-                    "fillStyle": "#ffb366"
+                    "fillStyle": "#f2f2f2",
+                    "textAlign": "center"
                 });
+                /*this.font = new me.BitmapFont(me.loader.getBinary('PressStart2P'), me.loader.getImage('PressStart2P'));
+                this.font.textAlign = "center"*/
+                this.storytop = me.game.viewport.height;
 
-                this.playtext = new me.Text(0, 0, {
-                    "font": "Courier New",
-                    "size": 20,
-                    "fillStyle": "#4d4d4d"
-                });
+                this.storytween = new me.Tween(this).to({storytop: 150}, 10000).start();
             },
 
             update : function (dt) {
@@ -53,14 +53,16 @@ game.TitleScreen = me.Stage.extend({
             },
 
             draw : function (renderer) {
-                let left = 525;
-                let top = 100;
-                this.titletext.draw(renderer, "ADVENTURES", left, top);
-                this.titletextsmall.draw(renderer, "of", left + 120, top + 50);
-                this.titletext.draw(renderer, "ASSBUTT", left + 45, top + 100);
-                top += 200;
-                this.playtext.draw(renderer, "PRESS ENTER", left + 70, top);
-                this.playtext.draw(renderer, "TO PLAY", left + 100, top + 25);
+                let top = this.storytop;
+                let center = me.game.viewport.width / 2;
+                for (let i = 0; i < this.story.length; ++i) {
+                    this.font.draw(renderer, this.story[i], center, top);
+                    top += 75;
+                }
+            },
+            onDestroyEvent : function() {
+                //just in case
+                this.storytween.stop();
             }
         })), 2);
 
@@ -72,7 +74,7 @@ game.TitleScreen = me.Stage.extend({
                 // play something on tap / enter
                 // this will unlock audio on mobile devices
                 me.audio.play("cling");
-                me.state.change(me.state.READY);
+                me.state.change(me.state.PLAY);
             }
         });
     },
@@ -84,5 +86,5 @@ game.TitleScreen = me.Stage.extend({
         me.input.unbindKey(me.input.KEY.ENTER);
         me.input.unbindPointer(me.input.pointer.LEFT);
         me.event.unsubscribe(this.handler);
-    }
+   }
 });
