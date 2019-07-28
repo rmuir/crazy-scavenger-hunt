@@ -12,7 +12,7 @@ game.PlayerEntity = me.Entity.extend({
         this._super(me.Entity, 'init', [x, y , settings]);
 
         // set the default horizontal & vertical speed (accel vector)
-        this.body.setVelocity(3, 20);
+        this.body.setVelocity(3, 16.5);
 
         // set the display to follow our position on both axis
         me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH, 0.4);
@@ -205,7 +205,7 @@ game.EnemyEntity = me.Entity.extend(
         this.walkLeft = false;
 
         // walking & jumping speed
-        this.body.setVelocity(4, 6);
+        this.body.setVelocity(2, 6);
     },
 
     // manage the enemy movement
