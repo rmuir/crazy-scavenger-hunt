@@ -104,7 +104,7 @@
     <property name="image" value="spinning_coin_gold"/>
    </properties>
   </object>
-  <object id="39" name="me.LevelEntity" x="64" y="128" width="32" height="160">
+  <object id="39" name="me.LevelEntity" x="1" y="30" width="32" height="64">
    <properties>
     <property name="to" value="area04"/>
    </properties>
