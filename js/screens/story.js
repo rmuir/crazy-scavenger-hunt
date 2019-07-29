@@ -29,9 +29,10 @@ game.StoryScreen = me.Stage.extend({
                 this.anchorPoint.set(0, 0);
 
                 this.story = [
-                    "Evil Ryan the teetotaler has stolen all of Assbutt's",
-                    "beer and hidden them throughout the Evil big Corp",
-                    "Kingdom. Help assbutt retrieve his beers and show",
+                    "Evil Ryan the Teetotaler has stolen all of Assbutt's",
+                    "beer money and hidden it throughout the Evil",
+                    "Kingdom. Assbutt is down to only five emergency beers!",
+                    "Help Assbutt retrieve his beer money and show",
                     "Ryan the teetotaler the error of his ways."
                 ];
 
