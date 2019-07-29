@@ -24,6 +24,8 @@ game.HUD.Container = me.Container.extend({
 
 		// add our child score object
 		this.addChild(new game.HUD.ScoreItem(-10, -10));
+
+		this.addChild(new game.HUD.LifeItem(0, 0));
 	}
 });
 
@@ -72,4 +74,40 @@ game.HUD.ScoreItem = me.Renderable.extend( {
 		this.font.draw (renderer, game.data.score, me.game.viewport.width + this.pos.x, me.game.viewport.height + this.pos.y);
 	}
 
+});
+
+/**
+ * life total
+ */
+game.HUD.LifeItem = me.Container.extend( {
+
+	init: function() {
+		this._super(me.Container, 'init');
+		this.pos.x = 25;
+		this.pos.y = me.game.viewport.height - 25;
+
+		this.sprites = [];
+		for (let i = 0; i < game.data.life; ++i) {
+			let sprite = new me.Sprite(i * 40, 0, {
+				image: me.loader.getImage('life')
+			});
+			this.sprites[i] = sprite;
+			this.addChild(sprite);
+		}
+
+		// local copy of the global life
+		this.life = -1;
+	},
+
+	update : function (dt) {
+		if (this.life !== game.data.life) {
+			this.life = game.data.life;
+			console.log("life: " + this.life);
+			for (let i = this.sprites.length; i > this.life; --i) {
+				this.sprites[i - 1].alpha = 0.0;
+			}
+			return true;
+		}
+		return me.Container.prototype.update.apply(this, [dt]);
+	}
 });

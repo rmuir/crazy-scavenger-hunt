@@ -26,6 +26,9 @@ game.PlayerEntity = me.Entity.extend({
         this.renderable.addAnimation("stand",  [0]);
         // set the standing animation as default
         this.renderable.setCurrentAnimation("stand");
+
+        this.immune = false;
+        this.immunetimer = -1;
     },
 
     /**
@@ -78,6 +81,13 @@ game.PlayerEntity = me.Entity.extend({
         // apply physics to the body (this moves the entity)
         this.body.update(dt);
 
+        if (this.immune) {
+            this.immunetimer -= dt;
+            if (this.immunetimer < 0) {
+                this.immune = false;
+            }
+        }
+
         // handle collisions against other shapes
         me.collision.check(this);
 
@@ -112,6 +122,8 @@ game.PlayerEntity = me.Entity.extend({
 
             case me.collision.types.ENEMY_OBJECT:
                 if ((response.overlapV.y>0) && !this.body.jumping) {
+                    this.immunetimer = 1000;
+                    this.immune = true;
                     // bounce (force jump)
                     this.body.falling = false;
                     this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
@@ -121,8 +133,13 @@ game.PlayerEntity = me.Entity.extend({
                     me.audio.play("stomp");
                 }
                 else {
-                    // let's flicker in case we touched an enemy
-                    this.renderable.flicker(750);
+                    if (!this.immune) {
+                        // let's flicker in case we touched an enemy
+                        this.renderable.flicker(3000);
+                        this.immunetimer = 3000;
+                        this.immune = true;
+                        game.data.life -= 1;
+                    }
                 }
                 return false;
                 break;
