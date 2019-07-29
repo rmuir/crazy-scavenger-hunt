@@ -138,7 +138,7 @@ game.PlayerEntity = me.Entity.extend({
                         this.renderable.flicker(3000);
                         this.immunetimer = 3000;
                         this.immune = true;
-                        game.data.life -= 1;
+                        game.loseLife();
                     }
                 }
                 return false;

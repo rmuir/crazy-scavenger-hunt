@@ -31,13 +31,19 @@ var game = {
         me.state.change(me.state.LOADING);
     },
 
-
+    "loseLife": function() {
+	    game.data.life -= 1;
+	    if (game.data.life <= 0) {
+	        me.state.change(me.state.GAMEOVER);
+        }
+    },
 
     // Run on game resources loaded.
     "loaded" : function () {
         me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.READY, new game.StoryScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
+        me.state.set(me.state.GAMEOVER, new game.GameOverScreen());
 
 		// add our player entity in the entity pool
 		me.pool.register("mainPlayer", game.PlayerEntity);
