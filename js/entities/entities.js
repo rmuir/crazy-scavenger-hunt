@@ -318,6 +318,7 @@ game.BossEntity = me.Entity.extend(
     {
         if (this.alive)
         {
+
             if (this.walkLeft && this.pos.x <= this.startX)
             {
                 this.walkLeft = false;
@@ -329,6 +330,15 @@ game.BossEntity = me.Entity.extend(
 
             this.renderable.flipX(this.walkLeft);
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
+
+            if (!this.body.jumping && !this.body.falling)
+            {
+                // set current vel to the maximum defined value
+                // gravity will then do the rest
+                this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
+                // set the jumping flag
+                this.body.jumping = true;
+            }
         }
         else
         {
