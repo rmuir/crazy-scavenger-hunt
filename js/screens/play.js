@@ -4,10 +4,6 @@ game.PlayScreen = me.Stage.extend({
 	 */
 	onResetEvent: function() {	
 		
-		// play the audio track
-        me.audio.stopTrack();
-		me.audio.playTrack("geom-dash-blast-processing");
-		
         // load a level
 		me.levelDirector.loadLevel("area01");
 

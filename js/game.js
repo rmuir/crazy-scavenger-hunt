@@ -66,7 +66,13 @@ var game = {
 		me.input.bindKey(me.input.KEY.UP,		"jump", true);
 		me.input.bindKey(me.input.KEY.SPACE,	"jump", true);
 
-        // Start the game.
-        me.state.change(me.state.MENU);
-    }
+    // play per-level audio file
+    me.game.onLevelLoaded = function(level) {
+      me.audio.stopTrack();
+      me.audio.playTrack(level);
+    };
+
+    // Start the game.
+    me.state.change(me.state.MENU);
+  }
 };

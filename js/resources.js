@@ -35,7 +35,10 @@ game.resources = [
 	/*
 	 * Background music.
 	 */
-	{name: "geom-dash-blast-processing", type: "audio", src: "data/bgm/"},
+	{name: "area01", type: "audio", src: "data/bgm/"},
+	{name: "area02", type: "audio", src: "data/bgm/"},
+	{name: "area03", type: "audio", src: "data/bgm/"},
+	{name: "area04", type: "audio", src: "data/bgm/"},
 	{name: "geom-dash-menu", type: "audio", src: "data/bgm/"},
 
 	/*
