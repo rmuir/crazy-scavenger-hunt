@@ -44,6 +44,7 @@ var game = {
         me.state.set(me.state.READY, new game.StoryScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
         me.state.set(me.state.GAMEOVER, new game.GameOverScreen());
+        me.state.set(me.state.CREDITS, new game.CreditsScreen());
 
 		// add our player entity in the entity pool
 		me.pool.register("mainPlayer", game.PlayerEntity);
