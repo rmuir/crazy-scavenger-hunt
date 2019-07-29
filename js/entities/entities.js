@@ -329,7 +329,6 @@ game.BossEntity = me.Entity.extend(
 
             this.renderable.flipX(this.walkLeft);
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
-
         }
         else
         {
