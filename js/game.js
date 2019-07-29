@@ -38,6 +38,11 @@ var game = {
         }
     },
 
+    "reset": function() {
+	    game.data.score = 0;
+	    game.data.life = 5;
+    },
+
     // Run on game resources loaded.
     "loaded" : function () {
         me.state.set(me.state.MENU, new game.TitleScreen());

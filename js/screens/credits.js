@@ -63,6 +63,7 @@ game.CreditsScreen = me.Stage.extend({
 
 		// transition to credits after 3 seconds
 		me.timer.setTimeout(function(timer) {
+			me.game.reset();
 			me.audio.play("cling");
 			me.state.change(me.state.MENU);
 		}, 3000);
