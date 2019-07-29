@@ -10,6 +10,8 @@ game.PlayScreen = me.Stage.extend({
 		
         // load a level
 		me.levelDirector.loadLevel("area01");
+
+		me.levelDirector
 		
 		// reset the score
 		game.data.score = 0;

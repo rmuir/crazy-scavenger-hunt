@@ -265,9 +265,14 @@ game.EnemyEntity = me.Entity.extend(
         if (response.b.body.collisionType !== me.collision.types.WORLD_SHAPE) {
             // res.y >0 means touched by something on the bottom
             // which mean at top position for this one
-            if (this.alive && (response.overlapV.y > 0) && response.a.body.falling) {
-                this.renderable.flicker(750);
+            if (this.alive && (response.overlapV.y < 0) && !response.a.body.jumping) {
+                console.log("Enemy got hit");
+                this.body.setCollisionMask(me.collision.types.NO_OBJECT);
+                this.alive = false;
+
+                this.body.vel.y = -this.body.accel.y * me.timer.tick;
             }
+            console.log("Enemy collision, overlap = " + response.overlapV.y + ", jumping = " + response.a.body.jumping, " falling = " + response.a.body.falling);
             return false;
         }
         // Make all other objects solid
@@ -307,13 +312,15 @@ game.BossEntity = me.Entity.extend(
         this.walkLeft = false;
 
         // walking & jumping speed
-        this.body.setVelocity(1.5, 20);
+        this.body.setVelocity(2, 25);
 
         // no coins for enemies
         this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
 
         // jump every second
         this.jumptimer = 1000;
+
+        this.life = 3;
     },
 
     // manage the enemy movement
@@ -370,6 +377,7 @@ game.BossEntity = me.Entity.extend(
             // which mean at top position for this one
             if (this.alive && (response.overlapV.y > 0) && response.a.body.falling) {
                 this.renderable.flicker(750);
+
             }
             return false;
         }
