@@ -311,6 +311,9 @@ game.BossEntity = me.Entity.extend(
 
         // no coins for enemies
         this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
+
+        // jump every second
+        this.jumptimer = 1000;
     },
 
     // manage the enemy movement
@@ -331,13 +334,16 @@ game.BossEntity = me.Entity.extend(
             this.renderable.flipX(this.walkLeft);
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
 
-            if (!this.body.jumping && !this.body.falling)
-            {
-                // set current vel to the maximum defined value
-                // gravity will then do the rest
-                this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
-                // set the jumping flag
-                this.body.jumping = true;
+            this.jumptimer -= dt;
+            if (this.jumptimer <= 0) {
+                if (!this.body.jumping && !this.body.falling) {
+                    // set current vel to the maximum defined value
+                    // gravity will then do the rest
+                    this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
+                    // set the jumping flag
+                    this.body.jumping = true;
+                }
+                this.jumptimer = 1000;
             }
         }
         else
