@@ -212,7 +212,7 @@ game.EnemyEntity = me.Entity.extend(
         // set start/end position based on the initial area size
         x = this.pos.x;
         this.startX = x;
-        this.endX   = x + width - settings.framewidth
+        this.endX   = x + width - settings.framewidth;
         this.pos.x  = x + width - settings.framewidth;
 
         // to remember which side we were walking
@@ -277,6 +277,137 @@ game.EnemyEntity = me.Entity.extend(
     }
 });
 
+game.MiniBossEntity = me.Entity.extend(
+    {
+        init: function (x, y, settings)
+        {
+            // define this here instead of tiled
+            settings.image = "miniboss";
+
+            // save the area size defined in Tiled
+            var width = settings.width;
+            var height = settings.height;
+
+            // adjust the size setting information to match the sprite size
+            // so that the entity object is created with the right size
+            settings.framewidth = settings.width = 128;
+            settings.frameheight = settings.height = 128;
+
+            // redefine the default shape (used to define path) with a shape matching the renderable
+            settings.shapes[0] = new me.Rect(0, 0, settings.framewidth, settings.frameheight);
+
+            // call the parent constructor
+            this._super(me.Entity, 'init', [x, y , settings]);
+
+            // set start/end position based on the initial area size
+            x = this.pos.x;
+            this.startX = x;
+            this.endX   = x + width - settings.framewidth;
+            this.pos.x  = x + width - settings.framewidth;
+
+            // to remember which side we were walking
+            this.walkLeft = false;
+
+            // walking & jumping speed
+            this.body.setVelocity(1, 10);
+            this.body.gravity.y = 0.2;
+
+            // no coins for enemies
+            this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
+
+            // jump every second
+            this.jumptimer = 1000;
+
+            this.life = 3;
+            this.immune = false;
+            this.immunetimer = -1;
+        },
+
+        hit : function() {
+            if (!this.immune) {
+                this.life -= 1;
+                this.body.vel.y = -this.body.vel.y;
+                this.body.falling = true;
+                this.body.jumping = false;
+
+                if (this.life <= 0) {
+                    this.body.setCollisionMask(me.collision.types.NO_OBJECT);
+                    this.body.vel.y = -this.body.accel.y * me.timer.tick;
+                    this.alive = false;
+                    me.timer.setTimeout(function(timer) {
+                        me.state.change(me.state.GAME_END);
+                    }, 3000);
+                }
+                this.immunetimer = 2000;
+                this.immune = true;
+            }
+        },
+
+        // manage the enemy movement
+        update : function (dt)
+        {
+            if (this.alive)
+            {
+
+                if (this.walkLeft && this.pos.x <= this.startX)
+                {
+                    this.walkLeft = false;
+                }
+                else if (!this.walkLeft && this.pos.x >= this.endX)
+                {
+                    this.walkLeft = true;
+                }
+
+                this.renderable.flipX(this.walkLeft);
+                this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
+
+                /*this.jumptimer -= dt;
+                if (this.jumptimer <= 0) {*/
+                if (!this.body.jumping && !this.body.falling) {
+                    // set current vel to the maximum defined value
+                    // gravity will then do the rest
+                    this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
+                    // set the jumping flag
+                    this.body.jumping = true;
+                }
+                this.jumptimer = 1000;
+                //}
+            }
+            else
+            {
+                this.body.vel.x = 0;
+            }
+            // check & update movement
+            this.body.update(dt);
+
+            if (this.immune) {
+                this.immunetimer -= dt;
+                if (this.immunetimer < 0) {
+                    this.immune = false;
+                }
+            }
+
+            // handle collisions against other shapes
+            me.collision.check(this);
+
+            // return true if we moved or if the renderable was updated
+            return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
+        },
+
+        /**
+         * colision handler
+         * (called when colliding with other objects)
+         */
+        onCollision : function (response, other) {
+            if (response.b.body.collisionType !== me.collision.types.WORLD_SHAPE) {
+                console.log("BOSS: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
+                return false;
+            }
+            // Make all other objects solid
+            return true;
+        }
+    });
+
 game.BossEntity = me.Entity.extend(
 {
     init: function (x, y, settings)
@@ -290,8 +421,8 @@ game.BossEntity = me.Entity.extend(
 
         // adjust the size setting information to match the sprite size
         // so that the entity object is created with the right size
-        settings.framewidth = settings.width = 128;
-        settings.frameheight = settings.height = 128;
+        settings.framewidth = settings.width = 192;
+        settings.frameheight = settings.height = 192;
 
         // redefine the default shape (used to define path) with a shape matching the renderable
         settings.shapes[0] = new me.Rect(0, 0, settings.framewidth, settings.frameheight);
@@ -316,7 +447,7 @@ game.BossEntity = me.Entity.extend(
         this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
 
         // jump every second
-        this.jumptimer = 1000;
+        this.jumptimer = 300;
 
         this.life = 3;
         this.immune = false;
@@ -338,7 +469,7 @@ game.BossEntity = me.Entity.extend(
                     me.state.change(me.state.GAME_END);
                 }, 3000);
             }
-            this.immunetimer = 2000;
+            this.immunetimer = 1000;
             this.immune = true;
         }
     },
@@ -361,8 +492,8 @@ game.BossEntity = me.Entity.extend(
             this.renderable.flipX(this.walkLeft);
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
 
-            /*this.jumptimer -= dt;
-            if (this.jumptimer <= 0) {*/
+            this.jumptimer -= dt;
+            if (this.jumptimer <= 0) {
                 if (!this.body.jumping && !this.body.falling) {
                     // set current vel to the maximum defined value
                     // gravity will then do the rest
@@ -370,8 +501,8 @@ game.BossEntity = me.Entity.extend(
                     // set the jumping flag
                     this.body.jumping = true;
                 }
-                this.jumptimer = 1000;
-            //}
+                this.jumptimer = 300;
+            }
         }
         else
         {

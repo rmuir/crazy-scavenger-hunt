@@ -10,6 +10,8 @@ game.resources = [
 	{name: "life",                type:"image",	src: "data/img/sprite/life.png"},
 	// our enemy entity
 	{name: "possubull",       type:"image",	src: "data/img/sprite/possubull.png"},
+	// mini boss
+	{name: "miniboss",       type:"image",	src: "data/img/sprite/possubull.png"},
 	// boss
 	{name: "boss",                type:"image", src: "data/img/sprite/ryanomite.png"},
     // game font

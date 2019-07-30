@@ -93,7 +93,7 @@
     <property name="image" value="assbutt"/>
    </properties>
   </object>
-  <object id="19" name="EnemyEntity" x="229" y="720" width="536" height="78"/>
+  <object id="19" name="MiniBossEntity" x="229" y="720" width="536" height="78"/>
   <object id="21" name="me.LevelEntity" x="928" y="96" width="32" height="158">
    <properties>
     <property name="to" value="area04"/>

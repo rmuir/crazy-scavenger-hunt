@@ -56,6 +56,7 @@ var game = {
 		me.pool.register("mainPlayer", game.PlayerEntity);
 		me.pool.register("CoinEntity", game.CoinEntity);
 		me.pool.register("EnemyEntity", game.EnemyEntity);
+        me.pool.register("MiniBossEntity", game.MiniBossEntity);
         me.pool.register("BossEntity", game.BossEntity);
 
 		// enable the keyboard
