@@ -435,6 +435,12 @@ game.BossEntity = me.Entity.extend(
         this.startX = x;
         this.endX   = x + width - settings.framewidth;
         this.pos.x  = x + width - settings.framewidth;
+        y = this.pos.y;
+        this.startY = y;
+        this.endY   = y + height - settings.frameheight;
+        this.pos.y  = this.endY;
+        this.body.falling = true;
+        this.body.vel.y = 1;
 
         // to remember which side we were walking
         this.walkLeft = false;
@@ -445,9 +451,6 @@ game.BossEntity = me.Entity.extend(
 
         // no coins for enemies
         this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
-
-        // jump every second
-        this.jumptimer = 300;
 
         this.life = 3;
         this.immune = false;
@@ -492,16 +495,12 @@ game.BossEntity = me.Entity.extend(
             this.renderable.flipX(this.walkLeft);
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
 
-            this.jumptimer -= dt;
-            if (this.jumptimer <= 0) {
-                if (!this.body.jumping && !this.body.falling) {
-                    // set current vel to the maximum defined value
-                    // gravity will then do the rest
-                    this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
-                    // set the jumping flag
-                    this.body.jumping = true;
-                }
-                this.jumptimer = 300;
+            if (!this.body.jumping && !this.body.falling) {
+                // set current vel to the maximum defined value
+                // gravity will then do the rest
+                this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
+                // set the jumping flag
+                this.body.jumping = true;
             }
         }
         else
