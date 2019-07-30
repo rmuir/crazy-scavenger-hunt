@@ -6,6 +6,9 @@ game.resources = [
 	{name: "assbutt",     type:"image",	src: "data/img/sprite/assbutt.png"},
 	// the spinning coin spritesheet
 	{name: "spinning_coin_gold",  type:"image",	src: "data/img/sprite/spinning_coin_gold.png"},
+	// liquor
+	{name: "liquor",              type:"image",	src: "data/img/sprite/liquor.png"},
+	{name: "shotglass",           type:"image",	src: "data/img/sprite/shotglass.png"},
 	// life icon
 	{name: "life",                type:"image",	src: "data/img/sprite/life.png"},
 	// our enemy entity

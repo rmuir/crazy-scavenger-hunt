@@ -184,6 +184,32 @@ game.CoinEntity = me.CollectableEntity.extend(
     }
 });
 
+game.LiquorEntity = me.CollectableEntity.extend(
+    {
+
+        init: function (x, y)
+        {
+            // call the parent constructor
+            this._super(me.CollectableEntity, 'init', [x, y , {
+                width: 64, height: 64, image: "liquor"}]);
+        },
+
+        /**
+         * colision handler
+         */
+        onCollision : function (response, other) {
+            // TODO: play a sound?
+            // me.audio.play("cling");
+            // make sure it cannot be collected "again"
+            this.body.setCollisionMask(me.collision.types.NO_OBJECT);
+            // remove it
+            me.game.world.removeChild(this);
+            game.data.liquor = 16;
+            console.log("GOT LIQUOR");
+            return false;
+        }
+    });
+
 /**
  * Enemy Entity
  */
@@ -336,7 +362,11 @@ game.MiniBossEntity = me.Entity.extend(
                     this.body.vel.y = -this.body.accel.y * me.timer.tick;
                     this.alive = false;
                     game.data.score += 2500;
-                    // TODO: unlock to next level
+                    console.log("creating liquor at: " +  this.pos.x + ", " + this.pos.y);
+                    let liquor = me.pool.pull('LiquorEntity', this.pos.x, this.pos.y);
+                    //let liquor = new game.LiquorEntity(, {});
+                    liquor.body.vel.y = this.body.vel.y; // fall down to platform if in air
+                    me.game.world.addChild(liquor);
                 }
                 this.immunetimer = 2000;
                 this.immune = true;

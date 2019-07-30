@@ -7,7 +7,9 @@ var game = {
 		// score
 		score : 0,
         // life total, aka "beers"
-        life: 5
+        life: 5,
+        // liquor to throw shots from
+        liquor: 0
 	},
 
     // Run on page load.
@@ -41,6 +43,7 @@ var game = {
     "reset": function() {
 	    game.data.score = 0;
 	    game.data.life = 5;
+	    game.data.liquor = 0;
     },
 
     // Run on game resources loaded.
@@ -55,6 +58,7 @@ var game = {
 		// add our player entity in the entity pool
 		me.pool.register("mainPlayer", game.PlayerEntity);
 		me.pool.register("CoinEntity", game.CoinEntity);
+        me.pool.register("LiquorEntity", game.LiquorEntity);
 		me.pool.register("EnemyEntity", game.EnemyEntity);
         me.pool.register("MiniBossEntity", game.MiniBossEntity);
         me.pool.register("BossEntity", game.BossEntity);
