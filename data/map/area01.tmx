@@ -4,13 +4,13 @@
   <image source="../img/map/area01_level_tiles.png" width="640" height="241"/>
  </tileset>
  <imagelayer id="1" name="Parallax1">
-  <image source="../img/shot.jpg" width="1280" height="703"/>
+  <image source="../img/bkg0.jpg" width="1280" height="703"/>
   <properties>
    <property name="ratio" value="0.25"/>
   </properties>
  </imagelayer>
  <imagelayer id="2" name="Parallax2" opacity="0.2">
-  <image source="../img/rain.jpg" width="1280" height="743"/>
+  <image source="../img/bkg1.jpg" width="1280" height="743"/>
   <properties>
    <property name="ratio" value="0.35"/>
   </properties>

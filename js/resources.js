@@ -20,10 +20,8 @@ game.resources = [
 	// story screen
 	{name: "story_screen",        type:"image",	src: "data/img/gui/story_screen2.jpg"},
 	// the parallax background
-	{name: "area01_bkg0",         type:"image",	src: "data/img/area01_bkg0.png"},
-	{name: "area01_bkg1",         type:"image",	src: "data/img/area01_bkg1.png"},
-{name: "shot",         type:"image",	src: "data/img/shot.jpg"},
-{name: "rain",         type:"image",	src: "data/img/rain.jpg"},
+    {name: "bkg0",         type:"image",	src: "data/img/bkg0.jpg"},
+	{name: "bkg1",         type:"image",	src: "data/img/bkg1.jpg"},
 	// our level tileset
 	{name: "area01_level_tiles",  type:"image",	src: "data/img/map/area01_level_tiles.png"},
 
@@ -32,9 +30,9 @@ game.resources = [
  	 */
 	{name: "area01",              type: "tmx",	src: "data/map/area01.tmx"},
 	{name: "area02",              type: "tmx",	src: "data/map/area02.tmx"},
-  {name: "area03",              type: "tmx",	src: "data/map/area03.tmx"},
-  {name: "area04",              type: "tmx",	src: "data/map/area04.tmx"},
-  {name: "area05",              type: "tmx",	src: "data/map/area05.tmx"},
+    {name: "area03",              type: "tmx",	src: "data/map/area03.tmx"},
+    {name: "area04",              type: "tmx",	src: "data/map/area04.tmx"},
+    {name: "area05",              type: "tmx",	src: "data/map/area05.tmx"},
 
 	/*
 	 * Background music.
