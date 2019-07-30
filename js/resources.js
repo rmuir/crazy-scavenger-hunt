@@ -31,7 +31,9 @@ game.resources = [
 	{name: "area01",              type: "tmx",	src: "data/map/area01.tmx"},
 	{name: "area02",              type: "tmx",	src: "data/map/area02.tmx"},
   {name: "area03",              type: "tmx",	src: "data/map/area03.tmx"},
-  {name: "area04",              type: "tmx",	src: "data/map/area04.tmx"}, 
+  {name: "area04",              type: "tmx",	src: "data/map/area04.tmx"},
+  {name: "area05",              type: "tmx",	src: "data/map/area05.tmx"}, 
+
 	/*
 	 * Background music.
 	 */
