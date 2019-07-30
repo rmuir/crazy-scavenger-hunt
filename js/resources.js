@@ -41,6 +41,7 @@ game.resources = [
 	{name: "area02", type: "audio", src: "data/bgm/"},
 	{name: "area03", type: "audio", src: "data/bgm/"},
 	{name: "area04", type: "audio", src: "data/bgm/"},
+	{name: "area05", type: "audio", src: "data/bgm/"},
 	{name: "geom-dash-menu", type: "audio", src: "data/bgm/"},
 
 	/*
