@@ -3,9 +3,19 @@
 * when you stomp on someone we should squash (flatten) them.
 * should we add mushrooms so you can get bigger????
 * when you die, we need to display stoned jack (data/img/sprite/jack_dead.png)
-* ryan should take N hits instead of 1 to die.
 * you should be able to throw shots at ryan
-* when ryan lands from a jump can we play loud earthquake sound, shake entire game, vibrate phone, be as obnoxious as possible, etc?
-* when ryan jumps can he move slower so he is up in the air more? possibly with a shadow.
+* when mishu lands from a jump can we play loud earthquake sound, shake entire game, vibrate phone, be as obnoxious as possible, etc?
+* ryan should move around ranomly in air (he flys) but need to make it constant velocity
 * when you win something cool should happen i guess
-* add another sprite frame for main character at least so legs move. possible wing-flapping
+* add another sprite frame for main character at least so legs move. possible wing-flapping (animation positions for entities are defined in entitities.js, already exist for player, we just aren't triggering them)
+* make liquor bottle stay in air and immune from pickup while flickering, so it is visible before picking up. 
+* maybe play special music when beating mini boss and final boss
+* make mishu have a jump pattern, like 2 small jumps and one big jump
+* make mishu's jump heigh random, within bounds for big/small
+* add HUD for number of shots left
+* add shot entity
+* fix squashing log to not be fooled by sitting underneath jumping enemy
+* make copies of levels in code, mirror them, so we can go through the entire game backwards if going left from beginning. this can allow maximum score if beating mirror takes you back to level 1 but with your score not reset.
+* maybe add one or two platforms to jump off to make killing mishu easier
+* need hit detection logic in ryan for where on the body shot glass actually hits, ideally at least the upper quadrant and only when facing the shot would it count as a hit
+* add life HUD element for ryan
