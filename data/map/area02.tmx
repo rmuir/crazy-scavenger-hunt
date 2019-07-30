@@ -110,7 +110,7 @@
   </object>
   <object id="32" name="me.LevelEntity" x="1215" y="255" width="32" height="128">
    <properties>
-    <property name="to" value="area03"/>
+    <property name="to" value="area05"/>
    </properties>
   </object>
  </objectgroup>
