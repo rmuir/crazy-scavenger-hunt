@@ -121,7 +121,8 @@ game.PlayerEntity = me.Entity.extend({
                 break;
 
             case me.collision.types.ENEMY_OBJECT:
-                if ((response.overlapV.y>0) && !this.body.jumping) {
+                if ((response.overlapV.y>0) && !this.body.jumping && !this.immune) {
+                    console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping);
                     this.immunetimer = 1000;
                     this.immune = true;
                     // bounce (force jump)
@@ -133,14 +134,12 @@ game.PlayerEntity = me.Entity.extend({
                     me.audio.play("stomp");
                     other.hit();
                 }
-                else {
-                    if (!this.immune) {
-                        // let's flicker in case we touched an enemy
-                        this.renderable.flicker(2000);
-                        this.immunetimer = 2000;
-                        this.immune = true;
-                        game.loseLife();
-                    }
+                else if (!this.immune) {
+                    // let's flicker in case we touched an enemy
+                    this.renderable.flicker(2000);
+                    this.immunetimer = 2000;
+                    this.immune = true;
+                    game.loseLife();
                 }
                 return false;
                 break;
@@ -270,7 +269,7 @@ game.EnemyEntity = me.Entity.extend(
      */
     onCollision : function (response, other) {
         if (response.b.body.collisionType !== me.collision.types.WORLD_SHAPE) {
-            console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
+            console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping);
             return false;
         }
         // Make all other objects solid
@@ -310,7 +309,8 @@ game.BossEntity = me.Entity.extend(
         this.walkLeft = false;
 
         // walking & jumping speed
-        this.body.setVelocity(2, 25);
+        this.body.setVelocity(1, 25);
+        this.body.friction.y = 1;
 
         // no coins for enemies
         this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
@@ -327,6 +327,9 @@ game.BossEntity = me.Entity.extend(
         if (!this.immune) {
             this.life -= 1;
             this.body.vel.y = -this.body.vel.y;
+            this.body.falling = true;
+            this.body.jumping = false;
+
             if (this.life <= 0) {
                 this.body.setCollisionMask(me.collision.types.NO_OBJECT);
                 this.body.vel.y = -this.body.accel.y * me.timer.tick;
@@ -358,8 +361,8 @@ game.BossEntity = me.Entity.extend(
             this.renderable.flipX(this.walkLeft);
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
 
-            this.jumptimer -= dt;
-            if (this.jumptimer <= 0) {
+            /*this.jumptimer -= dt;
+            if (this.jumptimer <= 0) {*/
                 if (!this.body.jumping && !this.body.falling) {
                     // set current vel to the maximum defined value
                     // gravity will then do the rest
@@ -368,7 +371,7 @@ game.BossEntity = me.Entity.extend(
                     this.body.jumping = true;
                 }
                 this.jumptimer = 1000;
-            }
+            //}
         }
         else
         {
