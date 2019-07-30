@@ -73,7 +73,7 @@ var game = {
         me.input.bindKey(me.input.KEY.NUM4,		"levelchange", true, true);
         me.input.bindKey(me.input.KEY.NUM5,		"levelchange", true, true);
         me.input.bindKey(me.input.KEY.M,		"goto", true, true);
-        me.input.bindKey(me.input.KEY.R,		"goto", true, true);
+        me.input.bindKey(me.input.KEY.B,		"goto", true, true);
         me.input.bindKey(me.input.KEY.P,		"goto", true, true);
         me.input.bindKey(me.input.KEY.G,		"goto", true, true);
         me.input.bindKey(me.input.KEY.C,		"goto", true, true);
@@ -84,7 +84,7 @@ var game = {
                 let state;
                 switch (keyCode) {
                     case me.input.KEY.M: state = me.state.MENU; break;
-                    case me.input.KEY.R: state = me.state.READY; break;
+                    case me.input.KEY.B: state = me.state.READY; break;
                     case me.input.KEY.P: state = me.state.PLAY; break;
                     case me.input.KEY.G: state = me.state.GAMEOVER; break;
                     case me.input.KEY.C: state = me.state.CREDITS; break;
