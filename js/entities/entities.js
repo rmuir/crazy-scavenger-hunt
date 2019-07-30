@@ -131,6 +131,7 @@ game.PlayerEntity = me.Entity.extend({
                     this.body.jumping = true;
                     // play some audio
                     me.audio.play("stomp");
+                    other.hit();
                 }
                 else {
                     if (!this.immune) {
@@ -225,6 +226,12 @@ game.EnemyEntity = me.Entity.extend(
         this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
     },
 
+    hit : function() {
+        this.body.setCollisionMask(me.collision.types.NO_OBJECT);
+        this.alive = false;
+        this.body.vel.y = -this.body.accel.y * me.timer.tick;
+    },
+
     // manage the enemy movement
     update : function (dt)
     {
@@ -263,14 +270,7 @@ game.EnemyEntity = me.Entity.extend(
      */
     onCollision : function (response, other) {
         if (response.b.body.collisionType !== me.collision.types.WORLD_SHAPE) {
-            // res.y >0 means touched by something on the bottom
-            // which mean at top position for this one
-            if (this.alive && (response.overlapV.y < 0) && !response.a.body.jumping) {
-                this.body.setCollisionMask(me.collision.types.NO_OBJECT);
-                this.alive = false;
-
-                this.body.vel.y = -this.body.accel.y * me.timer.tick;
-            }
+            console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
             return false;
         }
         // Make all other objects solid
@@ -319,6 +319,25 @@ game.BossEntity = me.Entity.extend(
         this.jumptimer = 1000;
 
         this.life = 3;
+        this.immune = false;
+        this.immunetimer = -1;
+    },
+
+    hit : function() {
+        if (!this.immune) {
+            this.life -= 1;
+            this.body.vel.y = -this.body.vel.y;
+            if (this.life <= 0) {
+                this.body.setCollisionMask(me.collision.types.NO_OBJECT);
+                this.body.vel.y = -this.body.accel.y * me.timer.tick;
+                this.alive = false;
+                me.timer.setTimeout(function(timer) {
+                    me.state.change(me.state.GAME_END);
+                }, 3000);
+            }
+            this.immunetimer = 2000;
+            this.immune = true;
+        }
     },
 
     // manage the enemy movement
@@ -358,6 +377,13 @@ game.BossEntity = me.Entity.extend(
         // check & update movement
         this.body.update(dt);
 
+        if (this.immune) {
+            this.immunetimer -= dt;
+            if (this.immunetimer < 0) {
+                this.immune = false;
+            }
+        }
+
         // handle collisions against other shapes
         me.collision.check(this);
 
@@ -371,21 +397,7 @@ game.BossEntity = me.Entity.extend(
      */
     onCollision : function (response, other) {
         if (response.b.body.collisionType !== me.collision.types.WORLD_SHAPE) {
-            // res.y >0 means touched by something on the bottom
-            // which mean at top position for this one
-            if (this.alive && response.overlapV.y < 1 && response.overlapV.y >= 0 && !response.a.body.jumping) {
-                this.life -= 1;
-
-                if (this.life <= 0) {
-                    this.body.setCollisionMask(me.collision.types.NO_OBJECT);
-                    this.body.vel.y = -this.body.accel.y * me.timer.tick;
-                    this.alive = false;
-                    me.timer.setTimeout(function(timer) {
-                        me.state.change(me.state.GAME_END);
-                    }, 3000);
-                }
-            }
-            console.log("BOSS: overlap = " + response.overlapV.y + ", jumping = " + response.a.body.jumping + ", life = " + this.life);
+            console.log("BOSS: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
             return false;
         }
         // Make all other objects solid
