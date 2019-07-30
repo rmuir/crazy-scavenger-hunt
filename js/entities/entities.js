@@ -334,9 +334,7 @@ game.MiniBossEntity = me.Entity.extend(
                     this.body.setCollisionMask(me.collision.types.NO_OBJECT);
                     this.body.vel.y = -this.body.accel.y * me.timer.tick;
                     this.alive = false;
-                    me.timer.setTimeout(function(timer) {
-                        me.state.change(me.state.GAME_END);
-                    }, 3000);
+                    // TODO: unlock to next level
                 }
                 this.immunetimer = 2000;
                 this.immune = true;

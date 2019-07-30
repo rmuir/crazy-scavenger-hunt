@@ -46,7 +46,12 @@ game.StoryScreen = me.Stage.extend({
                 this.font.textAlign = "center"*/
                 this.storytop = me.game.viewport.height;
 
-                this.storytween = new me.Tween(this).to({storytop: 150}, 10000).start();
+                this.storytween = new me.Tween(this).to({storytop: -me.game.viewport.height/2 - 100}, 15000)
+                    .onComplete(this.changeToPlay.bind(this)).start();
+            },
+
+            changeToPlay: function() {
+                me.state.change(me.state.PLAY)
             },
 
             update : function (dt) {
