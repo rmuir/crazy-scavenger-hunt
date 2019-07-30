@@ -229,6 +229,7 @@ game.EnemyEntity = me.Entity.extend(
         this.body.setCollisionMask(me.collision.types.NO_OBJECT);
         this.alive = false;
         this.body.vel.y = -this.body.accel.y * me.timer.tick;
+        game.data.score += 500;
     },
 
     // manage the enemy movement
@@ -334,6 +335,7 @@ game.MiniBossEntity = me.Entity.extend(
                     this.body.setCollisionMask(me.collision.types.NO_OBJECT);
                     this.body.vel.y = -this.body.accel.y * me.timer.tick;
                     this.alive = false;
+                    game.data.score += 2500;
                     // TODO: unlock to next level
                 }
                 this.immunetimer = 2000;
@@ -466,6 +468,7 @@ game.BossEntity = me.Entity.extend(
                 this.body.setCollisionMask(me.collision.types.NO_OBJECT);
                 this.body.vel.y = -this.body.accel.y * me.timer.tick;
                 this.alive = false;
+                game.data.score += 5000;
                 me.timer.setTimeout(function(timer) {
                     me.state.change(me.state.GAME_END);
                 }, 3000);
