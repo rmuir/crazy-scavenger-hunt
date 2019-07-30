@@ -309,8 +309,8 @@ game.BossEntity = me.Entity.extend(
         this.walkLeft = false;
 
         // walking & jumping speed
-        this.body.setVelocity(1, 25);
-        this.body.friction.y = 1;
+        this.body.setVelocity(1, 10);
+        this.body.gravity.y = 0.2;
 
         // no coins for enemies
         this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
