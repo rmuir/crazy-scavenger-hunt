@@ -1,0 +1,11 @@
+* some fucking way to move and jump in mobile! We only listen for keypresses.
+* some fixing of title screen and bullshit for mobile. try it out in firefox, turn on developer tools/responsible mode/galaxy or something
+* when you stomp on someone we should squash (flatten) them.
+* should we add mushrooms so you can get bigger????
+* when you die, we need to display stoned jack (data/img/sprite/jack_dead.png)
+* ryan should take N hits instead of 1 to die.
+* you should be able to throw shots at ryan
+* when ryan lands from a jump can we play loud earthquake sound, shake entire game, vibrate phone, be as obnoxious as possible, etc?
+* when ryan jumps can he move slower so he is up in the air more? possibly with a shadow.
+* when you win something cool should happen i guess
+* add another sprite frame for main character at least so legs move. possible wing-flapping
