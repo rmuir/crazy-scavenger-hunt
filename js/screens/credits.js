@@ -61,8 +61,8 @@ game.CreditsScreen = me.Stage.extend({
 			}
 		})), 2);
 
-		// transition to credits after 3 seconds
-		me.timer.setTimeout(function(timer) {
+		// transition to menu after 3 seconds
+		this.menuTimer = me.timer.setTimeout(function(timer) {
 			me.game.reset();
 			me.audio.play("cling");
 			me.state.change(me.state.MENU);
@@ -74,6 +74,6 @@ game.CreditsScreen = me.Stage.extend({
 	 *  action to perform when leaving this screen (state change)
 	 */
 	onDestroyEvent: function() {
-
+		me.timer.clearTimeout(this.menuTimer);
 	}
 });

@@ -66,13 +66,41 @@ var game = {
 		me.input.bindKey(me.input.KEY.UP,		"jump", true);
 		me.input.bindKey(me.input.KEY.SPACE,	"jump", true);
 
-    // play per-level audio file
-    me.game.onLevelLoaded = function(level) {
-      me.audio.stopTrack();
-      me.audio.playTrack(level);
-    };
+		// cheat codes
+        me.input.bindKey(me.input.KEY.NUM1,		"levelchange", true, true);
+        me.input.bindKey(me.input.KEY.NUM2,		"levelchange", true, true); 
+        me.input.bindKey(me.input.KEY.NUM3,		"levelchange", true, true);
+        me.input.bindKey(me.input.KEY.NUM4,		"levelchange", true, true);
+        me.input.bindKey(me.input.KEY.NUM5,		"levelchange", true, true);
+        me.input.bindKey(me.input.KEY.M,		"goto", true, true);
+        me.input.bindKey(me.input.KEY.R,		"goto", true, true);
+        me.input.bindKey(me.input.KEY.P,		"goto", true, true);
+        me.input.bindKey(me.input.KEY.G,		"goto", true, true);
+        me.input.bindKey(me.input.KEY.C,		"goto", true, true);
+        me.input.bindKey(me.input.KEY.W,		"goto", true, true);
 
-    // Start the game.
-    me.state.change(me.state.MENU);
-  }
+        me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge) {
+            if (action === "goto") {
+                let state;
+                switch (keyCode) {
+                    case me.input.KEY.M: state = me.state.MENU; break;
+                    case me.input.KEY.R: state = me.state.READY; break;
+                    case me.input.KEY.P: state = me.state.PLAY; break;
+                    case me.input.KEY.G: state = me.state.GAMEOVER; break;
+                    case me.input.KEY.C: state = me.state.CREDITS; break;
+                    case me.input.KEY.W: state = me.state.GAME_END; break;
+                }
+                me.state.change(state);
+            }
+        });
+
+        // play per-level audio file
+        me.game.onLevelLoaded = function(level) {
+          me.audio.stopTrack();
+          me.audio.playTrack(level);
+        };
+
+        // Start the game.
+        me.state.change(me.state.MENU);
+      }
 };
