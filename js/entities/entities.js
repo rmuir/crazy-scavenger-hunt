@@ -135,8 +135,8 @@ game.PlayerEntity = me.Entity.extend({
                 else {
                     if (!this.immune) {
                         // let's flicker in case we touched an enemy
-                        this.renderable.flicker(3000);
-                        this.immunetimer = 3000;
+                        this.renderable.flicker(2000);
+                        this.immunetimer = 2000;
                         this.immune = true;
                         game.loseLife();
                     }
