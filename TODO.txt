@@ -19,3 +19,4 @@
 * maybe add one or two platforms to jump off to make killing mishu easier
 * need hit detection logic in ryan for where on the body shot glass actually hits, ideally at least the upper quadrant and only when facing the shot would it count as a hit
 * add life HUD element for ryan
+* show boss/miniboss names somewhere
