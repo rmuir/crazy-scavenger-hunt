@@ -1,10 +1,7 @@
-* some fucking way to move and jump in mobile! We only listen for keypresses.
 * some fixing of title screen and bullshit for mobile. try it out in firefox, turn on developer tools/responsible mode/galaxy or something
 * when you stomp on someone we should squash (flatten) them.
 * should we add mushrooms so you can get bigger????
 * when you die, we need to display stoned jack (data/img/sprite/jack_dead.png)
-* you should be able to throw shots at ryan
-* when mishu lands from a jump can we play loud earthquake sound, shake entire game, vibrate phone, be as obnoxious as possible, etc?
 * ryan should move around ranomly in air (he flys) but need to make it constant velocity
 * when you win something cool should happen i guess
 * add another sprite frame for main character at least so legs move. possible wing-flapping (animation positions for entities are defined in entitities.js, already exist for player, we just aren't triggering them)
