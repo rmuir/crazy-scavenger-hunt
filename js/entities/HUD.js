@@ -135,13 +135,8 @@ game.HUD.LifeItem = me.Container.extend( {
 
 game.HUD.ButtonItem = me.GUI_Object.extend({
 	init: function(x, y, settings) {
-<<<<<<< HEAD
-		settings.framewidth = 32;
-		settings.frameheight = 32;
-=======
 		settings.framewidth = 100;
 		settings.frameheight = 100;
->>>>>>> bigger buttons
 		y += me.game.viewport.height;
 		this._super(me.GUI_Object, "init", [x, y, settings]);
 		this.key = settings.key;
