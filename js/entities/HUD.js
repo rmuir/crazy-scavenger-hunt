@@ -77,7 +77,7 @@ game.HUD.CenterTextItem = me.Renderable.extend({
 
 	draw: function (renderer) {
 
-		console.log("drawning center text: " + game.data.centerText);
+		//console.log("drawning center text: " + game.data.centerText);
 		if (game.data.centerText != null) {
 			this.font.draw(renderer, game.data.centerText, me.game.viewport.width / 2, me.game.viewport.height / 2);
 		}
@@ -157,7 +157,7 @@ game.HUD.LifeItem = me.Container.extend( {
 	update : function (dt) {
 		if (this.life !== game.data.life) {
 			this.life = game.data.life;
-			console.log("life: " + this.life);
+			//console.log("life: " + this.life);
 			for (let i = this.sprites.length; i > this.life; --i) {
 				this.sprites[i - 1].alpha = 0.0;
 			}

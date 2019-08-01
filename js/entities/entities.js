@@ -90,7 +90,7 @@ game.PlayerEntity = me.Entity.extend({
                 if (!this.facingLeft) {
                     x += this.width;
                 }
-                console.log("creating shot at: " + x + ", " + this.pos.y);
+                //console.log("creating shot at: " + x + ", " + this.pos.y);
                 let shot = me.pool.pull('ShotEntity', x, this.pos.y, {'left': this.facingLeft});
                 me.game.world.addChild(shot);
             }
@@ -141,7 +141,7 @@ game.PlayerEntity = me.Entity.extend({
 
             case me.collision.types.ENEMY_OBJECT:
                 if ((response.overlapV.y>0) && !this.body.jumping && !this.immune) {
-                    console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", type = " + other.constructor.name + ", collision = " + other.body.collisionType);
+                    //console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", type = " + other.constructor.name + ", collision = " + other.body.collisionType);
                     this.immunetimer = 1000;
                     this.immune = true;
                     // bounce (force jump)
@@ -242,7 +242,7 @@ game.LiquorEntity = me.CollectableEntity.extend({
             // remove it
             me.game.world.removeChild(this);
             game.data.liquor = 16;
-            console.log("GOT LIQUOR");
+            //console.log("GOT LIQUOR");
             return false;
         }
         return other.body.collisionType === me.collision.types.WORLD_SHAPE;
@@ -281,12 +281,12 @@ game.ShotEntity = me.Entity.extend({
 
     onCollision : function (response, other) {
         other = response.a === this ? response.b : response.a; // correct other
-        console.log("SHOT: collision = " + other.body.collisionType);
+        //console.log("SHOT: collision = " + other.body.collisionType);
         if (other.body.collisionType === me.collision.types.WORLD_SHAPE) {
             // disappear!
             me.game.world.removeChild(this);
         } else if (other.body.collisionType === me.collision.types.ENEMY_OBJECT) {
-            console.log("HIT: " + other.constructor.name);
+            //console.log("HIT: " + other.constructor.name);
             other.hit();
             me.game.world.removeChild(this);
         }
@@ -381,7 +381,7 @@ game.EnemyEntity = me.Entity.extend(
     onCollision : function (response, other) {
         other = response.a === this ? response.b : response.a; // correct other
         if (other.body.collisionType !== me.collision.types.WORLD_SHAPE) {
-            console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping);
+            //console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping);
             return false;
         }
         // Make all other objects solid
@@ -451,7 +451,7 @@ game.MiniBossEntity = me.Entity.extend(
                     this.alive = false;
                     game.data.score += 2500;
                     ;
-                    console.log("creating liquor at: " +  this.pos.x + ", " + this.pos.y);
+                    //console.log("creating liquor at: " +  this.pos.x + ", " + this.pos.y);
                     let liquor = me.pool.pull('LiquorEntity', me.game.viewport.width / 2, me.game.viewport.height / 2);
                     liquor.body.vel.y = this.body.vel.y; // fall down to platform if in air
                     me.game.world.addChild(liquor);
@@ -522,7 +522,7 @@ game.MiniBossEntity = me.Entity.extend(
         onCollision : function (response, other) {
             other = response.a === this ? response.b : response.a; // correct other
             if (other.body.collisionType !== me.collision.types.WORLD_SHAPE) {
-                console.log("BOSS: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
+                //console.log("BOSS: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
                 return false;
             }
             // Make all other objects solid
@@ -657,7 +657,7 @@ game.BossEntity = me.Entity.extend(
     onCollision : function (response, other) {
         other = response.a === this ? response.b : response.a; // correct other
         if (other.body.collisionType !== me.collision.types.WORLD_SHAPE) {
-            console.log("BOSS: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
+            //console.log("BOSS: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
             return false;
         }
         // Make all other objects solid

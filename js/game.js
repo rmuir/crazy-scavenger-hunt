@@ -18,7 +18,7 @@ var game = {
 	},
 
     "displayText" : function(text) {
-	    console.log("Setting center text: " + text);
+	    //console.log("Setting center text: " + text);
         game.data.centerText = text;
         me.game.repaint();
         me.timer.setTimeout(function() {
