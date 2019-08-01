@@ -647,6 +647,8 @@ game.BossEntity = me.Entity.extend(
             return false;
         }
         // Make all other objects solid
+        // and be loud about it, shake the phone, etc
+        me.device.vibrate(75);
         return true;
     }
 });
