@@ -40,7 +40,11 @@ game.CreditsScreen = me.Stage.extend({
 				this.credits = [
 					["Graphic Design", "Robert \"Ghostbuster\" Muir"],
 					["Level Design", "Jack \"Paranoid\" Conradson"],
-					["Engine Design", "Ryan Ernst"]
+					["Engine Design", "Ryan Ernst"],
+					["Gameplay", "Ryan Ernst"],
+					["Screenplay", "Jack \"Paranoid\" Conradson"],
+					["Sound Engineer", "Robert \"Ghostbuster\" Muir"],
+					["AI Engineer", "Ryan Ernst"],
 				];
 			},
 
@@ -61,12 +65,12 @@ game.CreditsScreen = me.Stage.extend({
 			}
 		})), 2);
 
-		// transition to menu after 3 seconds
+		// transition to menu after 10 seconds
 		this.menuTimer = me.timer.setTimeout(function(timer) {
 			me.game.reset();
 			me.audio.play("cling");
 			me.state.change(me.state.MENU);
-		}, 3000);
+		}, 10000);
 	},
 	
 	
