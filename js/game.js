@@ -37,8 +37,10 @@ var game = {
     "loseLife": function() {
 	    game.data.life -= 1;
 	    if (game.data.life <= 0) {
-	        me.state.change(me.state.GAMEOVER);
-        }
+        me.save.add({score: 0});
+        me.save.score = game.data.score;
+	      me.state.change(me.state.GAMEOVER);
+      }
     },
 
     "reset": function() {
