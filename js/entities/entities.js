@@ -10,6 +10,7 @@ game.PlayerEntity = me.Entity.extend({
     {
         // call the constructor
         this._super(me.Entity, 'init', [x, y , settings]);
+        this.body.collisionType = me.collision.types.PLAYER_OBJECT;
 
         // set the default horizontal & vertical speed (accel vector)
         this.body.setVelocity(3, 16.5);
@@ -29,6 +30,8 @@ game.PlayerEntity = me.Entity.extend({
 
         this.immune = false;
         this.immunetimer = -1;
+
+        this.facingLeft = false;
     },
 
     /**
@@ -46,6 +49,7 @@ game.PlayerEntity = me.Entity.extend({
             if (!this.renderable.isCurrentAnimation("walk")) {
                 this.renderable.setCurrentAnimation("walk");
             }
+            this.facingLeft = true;
         }
         else if (me.input.isKeyPressed('right'))
         {
@@ -57,6 +61,7 @@ game.PlayerEntity = me.Entity.extend({
             if (!this.renderable.isCurrentAnimation("walk")) {
                 this.renderable.setCurrentAnimation("walk");
             }
+            this.facingLeft = false;
         }
         else
         {
@@ -75,6 +80,16 @@ game.PlayerEntity = me.Entity.extend({
                 this.body.jumping = true;
                 // play some audio
                 me.audio.play("jump");
+            }
+        }
+        if (me.input.isKeyPressed('shoot'))
+        {
+            if (game.data.liquor > 0) {
+                game.data.liquor -= 1;
+                // TODO: adjust x based on left or right, so it comes out of top of face
+                console.log("creating shot at: " + this.pos.x + ", " + this.pos.y);
+                let shot = me.pool.pull('ShotEntity', this.pos.x, this.pos.y, {'left': this.facingLeft});
+                me.game.world.addChild(shot);
             }
         }
 
@@ -99,7 +114,8 @@ game.PlayerEntity = me.Entity.extend({
      * colision handler
      */
     onCollision : function (response, other) {
-        switch (response.b.body.collisionType) {
+        other = response.a === this ? response.b : response.a; // correct other
+        switch (other.body.collisionType) {
             case me.collision.types.WORLD_SHAPE:
                 // Simulate a platform object
                 if (other.type === "platform") {
@@ -122,7 +138,7 @@ game.PlayerEntity = me.Entity.extend({
 
             case me.collision.types.ENEMY_OBJECT:
                 if ((response.overlapV.y>0) && !this.body.jumping && !this.immune) {
-                    console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping);
+                    console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", type = " + other.constructor.name + ", collision = " + other.body.collisionType);
                     this.immunetimer = 1000;
                     this.immune = true;
                     // bounce (force jump)
@@ -171,33 +187,37 @@ game.CoinEntity = me.CollectableEntity.extend(
      * colision handler
      */
     onCollision : function (response, other) {
-        // do something when collide
-        me.audio.play("cling");
-        // give some score
-        game.data.score += 250;
-        // make sure it cannot be collected "again"
-        this.body.setCollisionMask(me.collision.types.NO_OBJECT);
-        // remove it
-        me.game.world.removeChild(this);
+        other = response.a === this ? response.b : response.a; // correct other
+        if (other.body.collisionType === me.collision.types.PLAYER_OBJECT) {
+            // do something when collide
+            me.audio.play("cling");
+            // give some score
+            game.data.score += 250;
+            // make sure it cannot be collected "again"
+            this.body.setCollisionMask(me.collision.types.NO_OBJECT);
+            // remove it
+            me.game.world.removeChild(this);
+        }
 
         return false;
     }
 });
 
-game.LiquorEntity = me.CollectableEntity.extend(
+game.LiquorEntity = me.CollectableEntity.extend({
+
+    init: function (x, y)
     {
+        // call the parent constructor
+        this._super(me.CollectableEntity, 'init', [x, y , {
+            width: 64, height: 64, image: "liquor"}]);
+    },
 
-        init: function (x, y)
-        {
-            // call the parent constructor
-            this._super(me.CollectableEntity, 'init', [x, y , {
-                width: 64, height: 64, image: "liquor"}]);
-        },
-
-        /**
-         * colision handler
-         */
-        onCollision : function (response, other) {
+    /**
+     * colision handler
+     */
+    onCollision : function (response, other) {
+        other = response.a === this ? response.b : response.a; // correct other
+        if (other.body.collisionType === me.collision.types.PLAYER_OBJECT) {
             // TODO: play a sound?
             // me.audio.play("cling");
             // make sure it cannot be collected "again"
@@ -208,7 +228,53 @@ game.LiquorEntity = me.CollectableEntity.extend(
             console.log("GOT LIQUOR");
             return false;
         }
-    });
+        return other.body.collisionType === me.collision.types.WORLD_SHAPE;
+    }
+});
+
+game.ShotEntity = me.Entity.extend({
+    init: function (x, y, settings)
+    {
+        settings.image = "shotglass";
+
+        settings.framewidth = settings.width = 32;
+        settings.frameheight = settings.height = 32;
+        // call the parent constructor
+        me.Entity.prototype.init.apply(this, [x, y, settings]);
+
+        this.body.collisionType = me.collision.types.PROJECTILE_OBJECT;
+
+        let xVel = 7;
+        if (settings.left) {
+            xVel = -xVel;
+        }
+
+        this.body.vel.x = xVel;
+        this.body.vel.y = -20;
+    },
+
+    update : function (dt)
+    {
+        // check & update movement
+        this.body.update(dt);
+
+        // handle collisions against other shapes
+        me.collision.check(this);
+    },
+
+    onCollision : function (response, other) {
+        other = response.a === this ? response.b : response.a; // correct other
+        console.log("SHOT: collision = " + other.body.collisionType);
+        if (other.body.collisionType === me.collision.types.WORLD_SHAPE) {
+            // disappear!
+            me.game.world.removeChild(this);
+        } else if (other.body.collisionType === me.collision.types.ENEMY_OBJECT) {
+            console.log("HIT: " + other.constructor.name);
+            other.hit();
+        }
+        return false; // passes through other stuff
+    }
+});
 
 /**
  * Enemy Entity
@@ -295,7 +361,8 @@ game.EnemyEntity = me.Entity.extend(
      * (called when colliding with other objects)
      */
     onCollision : function (response, other) {
-        if (response.b.body.collisionType !== me.collision.types.WORLD_SHAPE) {
+        other = response.a === this ? response.b : response.a; // correct other
+        if (other.body.collisionType !== me.collision.types.WORLD_SHAPE) {
             console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping);
             return false;
         }
@@ -429,7 +496,8 @@ game.MiniBossEntity = me.Entity.extend(
          * (called when colliding with other objects)
          */
         onCollision : function (response, other) {
-            if (response.b.body.collisionType !== me.collision.types.WORLD_SHAPE) {
+            other = response.a === this ? response.b : response.a; // correct other
+            if (other.body.collisionType !== me.collision.types.WORLD_SHAPE) {
                 console.log("BOSS: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
                 return false;
             }
@@ -560,7 +628,8 @@ game.BossEntity = me.Entity.extend(
      * (called when colliding with other objects)
      */
     onCollision : function (response, other) {
-        if (response.b.body.collisionType !== me.collision.types.WORLD_SHAPE) {
+        other = response.a === this ? response.b : response.a; // correct other
+        if (other.body.collisionType !== me.collision.types.WORLD_SHAPE) {
             console.log("BOSS: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", life = " + this.life);
             return false;
         }

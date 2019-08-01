@@ -60,6 +60,7 @@ var game = {
 		me.pool.register("mainPlayer", game.PlayerEntity);
 		me.pool.register("CoinEntity", game.CoinEntity);
         me.pool.register("LiquorEntity", game.LiquorEntity);
+        me.pool.register("ShotEntity", game.ShotEntity);
 		me.pool.register("EnemyEntity", game.EnemyEntity);
         me.pool.register("MiniBossEntity", game.MiniBossEntity);
         me.pool.register("BossEntity", game.BossEntity);
@@ -71,6 +72,8 @@ var game = {
 		me.input.bindKey(me.input.KEY.X,		"jump", true);
 		me.input.bindKey(me.input.KEY.UP,		"jump", true);
 		me.input.bindKey(me.input.KEY.SPACE,	"jump", true);
+        // shoot!
+        me.input.bindKey(me.input.KEY.Z,		"shoot", true);
 
 		// cheat codes
         me.input.bindKey(me.input.KEY.NUM1,		"levelchange", true, true);
@@ -84,6 +87,7 @@ var game = {
         me.input.bindKey(me.input.KEY.G,		"goto", true, true);
         me.input.bindKey(me.input.KEY.C,		"goto", true, true);
         me.input.bindKey(me.input.KEY.W,		"goto", true, true);
+        me.input.bindKey(me.input.KEY.A,		"ammo", true, true);
 
         me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge) {
             if (action === "goto") {
@@ -97,6 +101,9 @@ var game = {
                     case me.input.KEY.W: state = me.state.GAME_END; break;
                 }
                 me.state.change(state);
+            } else if (action == "ammo") {
+                console.log("CHEAT: 16 shots");
+                game.data.liquor = 16;
             }
         });
 
