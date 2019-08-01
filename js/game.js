@@ -24,6 +24,9 @@ var game = {
         // Initialize the audio.
         me.audio.init("mp3");
 
+        // local storage for high scores
+        me.save.add({ score: 0 });
+
         // Set a callback to run when loading is complete.
         me.loader.onload = this.loaded.bind(this);
 
@@ -37,8 +40,9 @@ var game = {
     "loseLife": function() {
 	    game.data.life -= 1;
 	    if (game.data.life <= 0) {
-        me.save.add({score: 0});
-        me.save.score = game.data.score;
+        if (game.data.score > me.save.score) {
+          me.save.score = game.data.score;
+        }
 	      me.state.change(me.state.GAMEOVER);
       }
     },

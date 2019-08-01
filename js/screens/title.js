@@ -60,11 +60,7 @@ game.TitleScreen = me.Stage.extend({
                 this.titletextsmall.draw(renderer, "of", left + 120, top + 50);
                 this.titletext.draw(renderer, "ASSBUTT", left + 45, top + 100);
                 top += 100;
-                let highscore = me.save.score;
-                if (highscore === undefined) {
-                  highscore = 0;
-                }
-                this.highscoretext.draw(renderer, "HIGH SCORE: " + highscore, left + 80, top + 50);
+                this.highscoretext.draw(renderer, "HIGH SCORE: " + me.save.score, left + 80, top + 50);
                 top += 100;
                 if (me.device.touch) {
                     this.playtext.draw(renderer, "TOUCH", left + 110, top);
