@@ -6,4 +6,4 @@ lint:
 	eslint js/
 
 run:
-	@python -m SimpleHTTPServer
+	@python testserver.py
