@@ -40,14 +40,14 @@ var game = {
     "loseLife": function() {
 	    game.data.life -= 1;
 	    if (game.data.life <= 0) {
-        if (game.data.score > me.save.score) {
-          me.save.score = game.data.score;
-        }
 	      me.state.change(me.state.GAMEOVER);
       }
     },
 
     "reset": function() {
+      if (game.data.score > me.save.score) {
+        me.save.score = game.data.score;
+      }
 	    game.data.score = 0;
 	    game.data.life = 5;
 	    game.data.liquor = 0;
