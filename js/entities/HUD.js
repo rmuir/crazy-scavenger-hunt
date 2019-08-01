@@ -115,16 +115,19 @@ game.HUD.LifeItem = me.Container.extend( {
 game.HUD.DirectionButtonItem = me.GUI_Object.extend({
 	init: function(x, y) {
 		settings = {
-			image: "life",
+			image: "button_left",
 			framewidth: 50,
-			frameheight: 50,
-			isHoldable: true,
+			frameheight: 50
 		};
 		y += me.game.viewport.height;
 		this._super(me.GUI_Object, "init", [x, y, settings]);
 	},
 
-	onHold: function() {
-		console.log("holding");
+  onClick: function() {
+    me.input.triggerKeyEvent(me.input.KEY.LEFT, true);
+  },
+
+	onRelease: function() {
+    me.input.triggerKeyEvent(me.input.KEY.LEFT, false);
 	}
 });
