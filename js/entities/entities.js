@@ -447,6 +447,9 @@ game.MiniBossEntity = me.Entity.extend(
                     //let liquor = new game.LiquorEntity(, {});
                     liquor.body.vel.y = this.body.vel.y; // fall down to platform if in air
                     me.game.world.addChild(liquor);
+                    let levelEntity = me.game.world.getChildByName('levelEntity')[0];
+                    levelEntity.nextlevel = "area04";
+                    levelEntity.gotolevel = "area04";
                 }
                 this.immunetimer = 2000;
                 this.immune = true;

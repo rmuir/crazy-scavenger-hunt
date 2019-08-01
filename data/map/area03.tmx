@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="30" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="32">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="30" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="34">
  <tileset firstgid="1" name="area01_level_tiles" tilewidth="32" tileheight="32" tilecount="140" columns="20">
   <image source="../img/map/area01_level_tiles.png" width="640" height="241"/>
  </tileset>
@@ -96,7 +96,7 @@
   <object id="19" name="MiniBossEntity" x="229" y="720" width="536" height="78"/>
   <object id="21" name="me.LevelEntity" x="928" y="96" width="32" height="158">
    <properties>
-    <property name="to" value="area04"/>
+    <property name="to" value="area03"/>
    </properties>
   </object>
  </objectgroup>
