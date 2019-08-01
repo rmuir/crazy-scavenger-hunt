@@ -25,22 +25,28 @@ game.HUD.Container = me.Container.extend({
 		// add our child score object
 		this.addChild(new game.HUD.ScoreItem(-10, 30)); // relative to top right
 		this.addChild(new game.HUD.LifeItem(25, 25)); // relative to top left
-		this.addChild(new game.HUD.ButtonItem(25, -25, {
-			image: "button_left",
-			key: me.input.KEY.LEFT
-		})); // relative to bottom left
-		this.addChild(new game.HUD.ButtonItem(95, -25, {
-			image: "button_right",
-			key: me.input.KEY.RIGHT
-		})); // relative to bottom left
-		this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 25, -25, {
-			image: "button_a",
-			key: me.input.KEY.Z
-		})); // relative to bottom left
-		this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 95, -25, {
-			image: "button_b",
-			key: me.input.KEY.X
-		})); // relative to bottom left
+
+		if (me.device.touch) {
+			this.addChild(new game.HUD.ButtonItem(25, -25, {
+				image: "button_left",
+				key: me.input.KEY.LEFT
+			})); // relative to bottom left
+			this.addChild(new game.HUD.ButtonItem(95, -25, {
+				image: "button_right",
+				key: me.input.KEY.RIGHT
+			})); // relative to bottom left
+			this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 25, -25, {
+				image: "button_a",
+				key: me.input.KEY.X
+			})); // relative to bottom left
+			this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 95, -25, {
+				image: "button_b",
+				key: me.input.KEY.Z,
+				shouldDraw: function() {
+					return game.data.liquor > 0;
+				}
+			})); // relative to bottom left
+		}
 	}
 });
 
@@ -129,18 +135,26 @@ game.HUD.LifeItem = me.Container.extend( {
 
 game.HUD.ButtonItem = me.GUI_Object.extend({
 	init: function(x, y, settings) {
-		settings.framewidth = 64;
-		settings.frameheight = 64;
+		settings.framewidth = 32;
+		settings.frameheight = 32;
 		y += me.game.viewport.height;
 		this._super(me.GUI_Object, "init", [x, y, settings]);
 		this.key = settings.key;
+		this.shouldDraw = 'shouldDraw' in settings ? settings.shouldDraw : function() { return true };
 	},
 
 	onClick: function() {
 		me.input.triggerKeyEvent(this.key, true);
+		console.log("touched button");
 	},
 
 	onRelease: function() {
 		me.input.triggerKeyEvent(this.key, false);
+	},
+
+	draw : function (renderer) {
+		if (this.shouldDraw()) {
+			this._super(me.GUI_Object, 'draw', [renderer]);
+		}
 	}
 });

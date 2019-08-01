@@ -59,7 +59,11 @@ game.TitleScreen = me.Stage.extend({
                 this.titletextsmall.draw(renderer, "of", left + 120, top + 50);
                 this.titletext.draw(renderer, "ASSBUTT", left + 45, top + 100);
                 top += 200;
-                this.playtext.draw(renderer, "PRESS ENTER", left + 70, top);
+                if (me.device.touch) {
+                    this.playtext.draw(renderer, "TOUCH", left + 110, top);
+                } else {
+                    this.playtext.draw(renderer, "PRESS ENTER", left + 70, top);
+                }
                 this.playtext.draw(renderer, "TO PLAY", left + 100, top + 25);
             }
         })), 2);
