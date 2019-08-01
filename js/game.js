@@ -12,7 +12,9 @@ var game = {
         // liquor to throw shots from
         liquor: 0,
 
-        centerText: null
+        centerText: null,
+
+        cheatEnabled: false
 	},
 
     "displayText" : function(text) {
@@ -23,6 +25,13 @@ var game = {
             game.data.centerText = null;
             me.game.repaint();
         }, 3000);
+    },
+
+    "cheatEnabled": function(text) {
+	    game.data.cheatEnabled = true;
+	    me.timer.setTimeout(function () {
+            game.data.cheatEnabled = false;
+        }, 2000);
     },
 
     // Run on page load.
@@ -106,9 +115,10 @@ var game = {
         me.input.bindKey(me.input.KEY.C,		"goto", true, true);
         me.input.bindKey(me.input.KEY.W,		"goto", true, true);
         me.input.bindKey(me.input.KEY.A,		"ammo", true, true);
+        me.input.bindKey(me.input.KEY.C,        "enablecheat", true);
 
         me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge) {
-            if (action === "goto") {
+            if (action === "goto" && game.data.cheatEnabled) {
                 let state;
                 switch (keyCode) {
                     case me.input.KEY.M: state = me.state.MENU; break;
@@ -120,10 +130,12 @@ var game = {
                 }
                 game.displayText("Cheat code accepted");
                 me.state.change(state);
-            } else if (action == "ammo") {
+            } else if (action == "ammo" && game.data.cheatEnabled) {
                 game.displayText("Cheat code accepted");
                 console.log("CHEAT: 16 shots");
                 game.data.liquor = 16;
+            } else if (action == "enablecheat") {
+                game.cheatEnabled();
             }
         });
 

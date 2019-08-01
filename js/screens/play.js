@@ -15,7 +15,7 @@ game.PlayScreen = me.Stage.extend({
 		me.game.world.addChild(this.HUD);
 
 		this.cheatHandler = me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge) {
-			if (action === "levelchange") {
+			if (action === "levelchange" && game.data.cheatEnabled) {
 				let n = -1;
 				switch (keyCode) {
 					case me.input.KEY.NUM1: n = 1; break;
