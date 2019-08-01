@@ -86,9 +86,12 @@ game.PlayerEntity = me.Entity.extend({
         {
             if (game.data.liquor > 0) {
                 game.data.liquor -= 1;
-                // TODO: adjust x based on left or right, so it comes out of top of face
-                console.log("creating shot at: " + this.pos.x + ", " + this.pos.y);
-                let shot = me.pool.pull('ShotEntity', this.pos.x, this.pos.y, {'left': this.facingLeft});
+                let x = this.pos.x;
+                if (!this.facingLeft) {
+                    x += this.width;
+                }
+                console.log("creating shot at: " + x + ", " + this.pos.y);
+                let shot = me.pool.pull('ShotEntity', x, this.pos.y, {'left': this.facingLeft});
                 me.game.world.addChild(shot);
             }
         }
@@ -212,6 +215,15 @@ game.LiquorEntity = me.CollectableEntity.extend({
             width: 64, height: 64, image: "liquor"}]);
     },
 
+    update : function (dt)
+    {
+        // check & update movement
+        this.body.update(dt);
+
+        // handle collisions against other shapes
+        me.collision.check(this);
+    },
+
     /**
      * colision handler
      */
@@ -271,6 +283,7 @@ game.ShotEntity = me.Entity.extend({
         } else if (other.body.collisionType === me.collision.types.ENEMY_OBJECT) {
             console.log("HIT: " + other.constructor.name);
             other.hit();
+            me.game.world.removeChild(this);
         }
         return false; // passes through other stuff
     }
