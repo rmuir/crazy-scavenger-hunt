@@ -218,7 +218,7 @@ game.LiquorEntity = me.CollectableEntity.extend({
         this.isCollectable = false;
         // call the parent constructor
         this._super(me.CollectableEntity, 'init', [x, y, settings]);
-        this.flicker(3000, function() {
+        this.renderable.flicker(3000, function() {
            this.isCollectable = true;
         });
     },
