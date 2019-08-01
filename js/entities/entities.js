@@ -402,7 +402,7 @@ game.MiniBossEntity = me.Entity.extend(
 
             // adjust the size setting information to match the sprite size
             // so that the entity object is created with the right size
-            settings.framewidth = settings.width = 128;
+            settings.framewidth = settings.width = 78;
             settings.frameheight = settings.height = 128;
 
             // redefine the default shape (used to define path) with a shape matching the renderable
@@ -543,8 +543,8 @@ game.BossEntity = me.Entity.extend(
 
         // adjust the size setting information to match the sprite size
         // so that the entity object is created with the right size
-        settings.framewidth = settings.width = 192;
-        settings.frameheight = settings.height = 192;
+        settings.framewidth = settings.width = 108;
+        settings.frameheight = settings.height = 189;
 
         // redefine the default shape (used to define path) with a shape matching the renderable
         settings.shapes[0] = new me.Rect(0, 0, settings.framewidth, settings.frameheight);
