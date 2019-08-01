@@ -23,9 +23,9 @@ game.HUD.Container = me.Container.extend({
 		this.name = "HUD";
 
 		// add our child score object
-		this.addChild(new game.HUD.ScoreItem(-10, -10));
+		this.addChild(new game.HUD.ScoreItem(-10, 30)); // relative to top right
 
-		this.addChild(new game.HUD.LifeItem(0, 0));
+		this.addChild(new game.HUD.LifeItem(25, 25)); // relative to top left
 	}
 });
 
@@ -71,7 +71,7 @@ game.HUD.ScoreItem = me.Renderable.extend( {
 	 * draw the score
 	 */
 	draw : function (renderer) {
-		this.font.draw (renderer, game.data.score, me.game.viewport.width + this.pos.x, me.game.viewport.height + this.pos.y);
+		this.font.draw (renderer, game.data.score, me.game.viewport.width + this.pos.x, this.pos.y);
 	}
 
 });
@@ -81,10 +81,10 @@ game.HUD.ScoreItem = me.Renderable.extend( {
  */
 game.HUD.LifeItem = me.Container.extend( {
 
-	init: function() {
+	init: function(x, y) {
 		this._super(me.Container, 'init');
-		this.pos.x = 25;
-		this.pos.y = me.game.viewport.height - 25;
+		this.pos.x = x;
+		this.pos.y = y;
 
 		this.sprites = [];
 		for (let i = 0; i < game.data.life; ++i) {
