@@ -215,12 +215,16 @@ game.LiquorEntity = me.CollectableEntity.extend({
             height: 64,
             image: "liquor",
         };
-        this.isCollectable = false;
+        this.isCollectable =true;
         // call the parent constructor
         this._super(me.CollectableEntity, 'init', [x, y, settings]);
-        this.renderable.flicker(3000, function() {
-           this.isCollectable = true;
-        });
+        this.alwaysUpdate = true;
+        //this.anchorPoint.set(0, 0);
+        //this.renderable.flicker(3000);
+    },
+
+    makeCollectable : function() {
+        this.isCollectable = true;
     },
 
     update : function (dt)
@@ -242,7 +246,7 @@ game.LiquorEntity = me.CollectableEntity.extend({
             // remove it
             me.game.world.removeChild(this);
             game.data.liquor = 16;
-            //console.log("GOT LIQUOR");
+            console.log("GOT LIQUOR");
             return false;
         }
         return other.body.collisionType === me.collision.types.WORLD_SHAPE;
@@ -450,7 +454,6 @@ game.MiniBossEntity = me.Entity.extend(
                     this.body.vel.y = -this.body.accel.y * me.timer.tick;
                     this.alive = false;
                     game.data.score += 2500;
-                    ;
                     //console.log("creating liquor at: " +  this.pos.x + ", " + this.pos.y);
                     let liquor = me.pool.pull('LiquorEntity', me.game.viewport.width / 2, me.game.viewport.height / 2);
                     liquor.body.vel.y = this.body.vel.y; // fall down to platform if in air
