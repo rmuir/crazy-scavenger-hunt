@@ -113,6 +113,9 @@ var game = {
           me.audio.playTrack(level);
         };
 
+        // global fade between transitions
+        me.state.transition("fade", "#000000", 500);
+
         // Start the game.
         me.state.change(me.state.MENU);
       }

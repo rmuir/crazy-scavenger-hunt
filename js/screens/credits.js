@@ -2,12 +2,7 @@ game.CreditsScreen = me.Stage.extend({
 	/**	
 	 *  action to perform on state change
 	 */
-	onResetEvent: function() {	
-		
-		// play the audio track
-		// TODO: find game over music
-        //me.audio.stopTrack();
-		//me.audio.playTrack("menu");
+	onResetEvent: function() {
 
 		me.game.world.addChild(new me.ColorLayer("background", "#000000"), 0);
 
@@ -46,38 +41,38 @@ game.CreditsScreen = me.Stage.extend({
 					["Sound Engineer", "Robert \"Ghostbuster\" Muir"],
 					["AI Engineer", "Ryan Ernst"],
 				];
+
+				this.titley = 75;
+				this.creditstween = new me.Tween(this).to({titley: -300}, 10000)
+					.onComplete(this.changeToMenu.bind(this)).start();
 			},
 
 			update : function (dt) {
 				return true;
 			},
 
+			changeToMenu : function() {
+				me.game.reset();
+				me.state.change(me.state.MENU);
+			},
+
 			draw : function (renderer) {
 				let centerx = me.game.viewport.width / 2;
-				let titley = 75;
-				this.creditsfont.draw(renderer, "CREDITS", centerx, titley);
+				this.creditsfont.draw(renderer, "CREDITS", centerx, this.titley);
 				for (let i = 0; i < this.credits.length; ++i) {
-					let y = titley  + 75 + i * 100;
+					let y = this.titley  + 100 + i * 75;
 					let credit = this.credits[i];
 					this.titlefont.draw(renderer, credit[0], 50, y);
 					this.namefont.draw(renderer, credit[1], 400, y);
 				}
+			},
+
+			onDestroyEvent: function() {
+				this.creditstween.stop();
 			}
 		})), 2);
-
-		// transition to menu after 10 seconds
-		this.menuTimer = me.timer.setTimeout(function(timer) {
-			me.game.reset();
-			me.audio.play("cling");
-			me.state.change(me.state.MENU);
-		}, 10000);
 	},
 	
 	
-	/**	
-	 *  action to perform when leaving this screen (state change)
-	 */
-	onDestroyEvent: function() {
-		me.timer.clearTimeout(this.menuTimer);
-	}
+
 });

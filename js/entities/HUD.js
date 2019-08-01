@@ -145,7 +145,6 @@ game.HUD.ButtonItem = me.GUI_Object.extend({
 
 	onClick: function() {
 		me.input.triggerKeyEvent(this.key, true);
-		console.log("touched button");
 	},
 
 	onRelease: function() {

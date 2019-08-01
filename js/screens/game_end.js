@@ -40,9 +40,8 @@ game.GameEndScreen = me.Stage.extend({
 
 		// transition to credits after 3 seconds
 		this.creditsTimer = me.timer.setTimeout(function(timer) {
-			me.audio.play("cling");
 			me.state.change(me.state.CREDITS);
-		}, 3000);
+		}, 4500);
 	},
 
 	onDestroyEvent: function() {
