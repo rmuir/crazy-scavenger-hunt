@@ -29,7 +29,7 @@ game.HUD.Container = me.Container.extend({
 			image: "button_left",
 			key: me.input.KEY.LEFT
 		})); // relative to bottom left
-		this.addChild(new game.HUD.ButtonItem(60, -25, {
+		this.addChild(new game.HUD.ButtonItem(95, -25, {
 			image: "button_right",
 			key: me.input.KEY.RIGHT
 		})); // relative to bottom left
@@ -37,7 +37,7 @@ game.HUD.Container = me.Container.extend({
 			image: "button_a",
 			key: me.input.KEY.Z
 		})); // relative to bottom left
-		this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 60, -25, {
+		this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 95, -25, {
 			image: "button_b",
 			key: me.input.KEY.X
 		})); // relative to bottom left
