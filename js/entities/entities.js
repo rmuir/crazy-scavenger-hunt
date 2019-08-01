@@ -142,7 +142,7 @@ game.PlayerEntity = me.Entity.extend({
                     game.loseLife();
                 }
                 return false;
-                break;
+                //break;
 
             default:
                 // Do not respond to other objects (e.g. coins)
@@ -222,7 +222,7 @@ game.EnemyEntity = me.Entity.extend(
 
         // save the area size defined in Tiled
         var width = settings.width;
-        var height = settings.height;
+        //var height = settings.height;
 
         // adjust the size setting information to match the sprite size
         // so that the entity object is created with the right size
@@ -313,7 +313,7 @@ game.MiniBossEntity = me.Entity.extend(
 
             // save the area size defined in Tiled
             var width = settings.width;
-            var height = settings.height;
+            //var height = settings.height;
 
             // adjust the size setting information to match the sprite size
             // so that the entity object is created with the right size
