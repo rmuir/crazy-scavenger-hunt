@@ -1,5 +1,6 @@
 
 /* Game namespace */
+// eslint-disable-next-line no-redeclare
 var game = {
 
 	// an object where to store game information

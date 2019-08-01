@@ -1,0 +1,15 @@
+env:
+  browser: true
+parserOptions:
+  ecmaVersion: 6
+globals:
+  me: false
+  game: true
+extends: 'eslint:recommended'
+rules:
+  no-mixed-spaces-and-tabs: 'off'
+  no-unused-vars:
+    - error
+    -
+      vars: 'local'
+      args: 'none'
