@@ -24,8 +24,8 @@ game.HUD.Container = me.Container.extend({
 
 		// add our child score object
 		this.addChild(new game.HUD.ScoreItem(-10, 30)); // relative to top right
-
 		this.addChild(new game.HUD.LifeItem(25, 25)); // relative to top left
+		this.addChild(new game.HUD.DirectionButtonItem(25, -25)) // relative to bottom left
 	}
 });
 
@@ -109,5 +109,22 @@ game.HUD.LifeItem = me.Container.extend( {
 			return true;
 		}
 		return me.Container.prototype.update.apply(this, [dt]);
+	}
+});
+
+game.HUD.DirectionButtonItem = me.GUI_Object.extend({
+	init: function(x, y) {
+		settings = {
+			image: "life",
+			framewidth: 50,
+			frameheight: 50,
+			isHoldable: true,
+		};
+		y += me.game.viewport.height;
+		this._super(me.GUI_Object, "init", [x, y, settings]);
+	},
+
+	onHold: function() {
+		console.log("holding");
 	}
 });
