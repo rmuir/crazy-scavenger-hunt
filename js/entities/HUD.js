@@ -27,19 +27,19 @@ game.HUD.Container = me.Container.extend({
 		this.addChild(new game.HUD.LifeItem(25, 25)); // relative to top left
 
 		if (me.device.touch) {
-			this.addChild(new game.HUD.ButtonItem(25, -25, {
+			this.addChild(new game.HUD.ButtonItem(45, -45, {
 				image: "button_left",
 				key: me.input.KEY.LEFT
 			})); // relative to bottom left
-			this.addChild(new game.HUD.ButtonItem(95, -25, {
+			this.addChild(new game.HUD.ButtonItem(131, -45, {
 				image: "button_right",
 				key: me.input.KEY.RIGHT
 			})); // relative to bottom left
-			this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 25, -25, {
+			this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 45, -45, {
 				image: "button_a",
 				key: me.input.KEY.X
 			})); // relative to bottom left
-			this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 95, -25, {
+			this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 131, -45, {
 				image: "button_b",
 				key: me.input.KEY.Z,
 				shouldDraw: function() {
@@ -135,8 +135,13 @@ game.HUD.LifeItem = me.Container.extend( {
 
 game.HUD.ButtonItem = me.GUI_Object.extend({
 	init: function(x, y, settings) {
+<<<<<<< HEAD
 		settings.framewidth = 32;
 		settings.frameheight = 32;
+=======
+		settings.framewidth = 100;
+		settings.frameheight = 100;
+>>>>>>> bigger buttons
 		y += me.game.viewport.height;
 		this._super(me.GUI_Object, "init", [x, y, settings]);
 		this.key = settings.key;
