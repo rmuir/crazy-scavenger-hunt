@@ -26,7 +26,7 @@ game.HUD.Container = me.Container.extend({
 		this.addChild(new game.HUD.ScoreItem(-10, 30)); // relative to top right
 		this.addChild(new game.HUD.LifeItem(25, 25)); // relative to top left
 
-		if (me.device.touch) {
+		if (me.device.isMobile) {
 			this.addChild(new game.HUD.ButtonItem(45, -45, {
 				image: "button_left",
 				key: me.input.KEY.LEFT
