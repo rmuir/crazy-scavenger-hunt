@@ -5,7 +5,7 @@ game.GameOverScreen = me.Stage.extend({
 	onResetEvent: function() {	
 		
 		// play the audio track
-   /me.audio.stopTrack();
+    me.audio.stopTrack();
 		me.audio.playTrack("gameover");
 
 		me.game.world.addChild(new me.ColorLayer("background", "#000000"), 0);

@@ -47,7 +47,9 @@ game.resources = [
 	{name: "area03", type: "audio", src: "data/bgm/"},
 	{name: "area04", type: "audio", src: "data/bgm/"},
 	{name: "area05", type: "audio", src: "data/bgm/"},
-	{name: "menu", type: "audio", src: "data/bgm/"},
+	{name: "title", type: "audio", src: "data/bgm/"},
+	{name: "story", type: "audio", src: "data/bgm/"},
+	{name: "game_end", type: "audio", src: "data/bgm/"},
 	{name: "gameover", type: "audio", src: "data/bgm/"},
 
 	/*

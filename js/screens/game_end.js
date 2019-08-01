@@ -5,9 +5,8 @@ game.GameEndScreen = me.Stage.extend({
 	onResetEvent: function() {	
 		
 		// play the audio track
-		// TODO: find game over music
-        //me.audio.stopTrack();
-		//me.audio.playTrack("menu");
+    me.audio.stopTrack();
+		me.audio.playTrack("game_end");
 
 		me.game.world.addChild(new me.ColorLayer("background", "#000000"), 0);
 

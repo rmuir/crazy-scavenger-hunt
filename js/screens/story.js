@@ -5,9 +5,8 @@ game.StoryScreen = me.Stage.extend({
      */
     onResetEvent : function() {
 
-        //me.audio.stopTrack();
-        // TODO: need diff music for story, more somber
-        //me.audio.playTrack("menu");
+        me.audio.stopTrack();
+        me.audio.playTrack("story");
 
         // title screen
         var backgroundImage = new me.Sprite(0, 0, {
