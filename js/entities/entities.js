@@ -210,9 +210,17 @@ game.LiquorEntity = me.CollectableEntity.extend({
 
     init: function (x, y)
     {
+        let settings = {
+            width: 64,
+            height: 64,
+            image: "liquor",
+        };
+        this.isCollectable = false;
         // call the parent constructor
-        this._super(me.CollectableEntity, 'init', [x, y , {
-            width: 64, height: 64, image: "liquor"}]);
+        this._super(me.CollectableEntity, 'init', [x, y, settings]);
+        this.flicker(3000, function() {
+           this.isCollectable = true;
+        });
     },
 
     update : function (dt)
@@ -229,10 +237,7 @@ game.LiquorEntity = me.CollectableEntity.extend({
      */
     onCollision : function (response, other) {
         other = response.a === this ? response.b : response.a; // correct other
-        if (other.body.collisionType === me.collision.types.PLAYER_OBJECT) {
-            // TODO: play a sound?
-            // me.audio.play("cling");
-            // make sure it cannot be collected "again"
+        if (other.body.collisionType === me.collision.types.PLAYER_OBJECT && this.isCollectable) {
             this.body.setCollisionMask(me.collision.types.NO_OBJECT);
             // remove it
             me.game.world.removeChild(this);
@@ -412,6 +417,9 @@ game.MiniBossEntity = me.Entity.extend(
             this.endX   = x + width - settings.framewidth;
             this.pos.x  = x + width - settings.framewidth;
 
+            // update even when offscreen
+            this.alwaysUpdate = true;
+
             // to remember which side we were walking
             this.walkLeft = false;
 
@@ -442,9 +450,9 @@ game.MiniBossEntity = me.Entity.extend(
                     this.body.vel.y = -this.body.accel.y * me.timer.tick;
                     this.alive = false;
                     game.data.score += 2500;
+                    ;
                     console.log("creating liquor at: " +  this.pos.x + ", " + this.pos.y);
-                    let liquor = me.pool.pull('LiquorEntity', this.pos.x, this.pos.y);
-                    //let liquor = new game.LiquorEntity(, {});
+                    let liquor = me.pool.pull('LiquorEntity', me.game.viewport.width / 2, me.game.viewport.height / 2);
                     liquor.body.vel.y = this.body.vel.y; // fall down to platform if in air
                     me.game.world.addChild(liquor);
                     let levelEntity = me.game.world.getChildByName('levelEntity')[0];
@@ -555,6 +563,9 @@ game.BossEntity = me.Entity.extend(
         this.pos.y  = this.endY;
         this.body.falling = true;
         this.body.vel.y = 1;
+
+        // update even when offscreen
+        this.alwaysUpdate = true;
 
         // to remember which side we were walking
         this.walkLeft = false;
