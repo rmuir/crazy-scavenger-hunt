@@ -30,13 +30,13 @@ game.resources = [
 	// our level tileset
 	{name: "area01_level_tiles",  type:"image",	src: "data/img/map/area01_level_tiles.png"},
 
-  /*
-   * Controls
-   */
-	{name: "button_left",  type:"image",	src: "data/img/controls/button_left.png"},
-	{name: "button_right",  type:"image",	src: "data/img/controls/button_right.png"},
-	{name: "button_a",  type:"image",	src: "data/img/controls/button_a.png"},
-	{name: "button_b",  type:"image",	src: "data/img/controls/button_b.png"},
+	/**
+	 * mobile controls
+	 */
+	{name: "button_left",  		  type:"image",	src: "data/img/controls/button_left.png"},
+	{name: "button_right",  	  type:"image",	src: "data/img/controls/button_right.png"},
+	{name: "button_a",  		  type:"image",	src: "data/img/controls/button_a.png"},
+	{name: "button_b",  		  type:"image",	src: "data/img/controls/button_b.png"},
 
 	/*
 	 * Maps.

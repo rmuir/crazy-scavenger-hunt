@@ -25,7 +25,22 @@ game.HUD.Container = me.Container.extend({
 		// add our child score object
 		this.addChild(new game.HUD.ScoreItem(-10, 30)); // relative to top right
 		this.addChild(new game.HUD.LifeItem(25, 25)); // relative to top left
-		this.addChild(new game.HUD.DirectionButtonItem(25, -25)) // relative to bottom left
+		this.addChild(new game.HUD.ButtonItem(25, -25, {
+			image: "button_left",
+			key: me.input.KEY.LEFT
+		})); // relative to bottom left
+		this.addChild(new game.HUD.ButtonItem(60, -25, {
+			image: "button_right",
+			key: me.input.KEY.RIGHT
+		})); // relative to bottom left
+		this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 25, -25, {
+			image: "button_a",
+			key: me.input.KEY.Z
+		})); // relative to bottom left
+		this.addChild(new game.HUD.ButtonItem(me.game.viewport.width - 60, -25, {
+			image: "button_b",
+			key: me.input.KEY.X
+		})); // relative to bottom left
 	}
 });
 
@@ -112,22 +127,20 @@ game.HUD.LifeItem = me.Container.extend( {
 	}
 });
 
-game.HUD.DirectionButtonItem = me.GUI_Object.extend({
-	init: function(x, y) {
-		settings = {
-			image: "button_left",
-			framewidth: 50,
-			frameheight: 50
-		};
+game.HUD.ButtonItem = me.GUI_Object.extend({
+	init: function(x, y, settings) {
+		settings.framewidth = 64;
+		settings.frameheight = 64;
 		y += me.game.viewport.height;
 		this._super(me.GUI_Object, "init", [x, y, settings]);
+		this.key = settings.key;
 	},
 
-  onClick: function() {
-    me.input.triggerKeyEvent(me.input.KEY.LEFT, true);
-  },
+	onClick: function() {
+		me.input.triggerKeyEvent(this.key, true);
+	},
 
 	onRelease: function() {
-    me.input.triggerKeyEvent(me.input.KEY.LEFT, false);
+		me.input.triggerKeyEvent(this.key, false);
 	}
 });
