@@ -7,7 +7,7 @@ game.CreditsScreen = me.Stage.extend({
 		// play the audio track
 		// TODO: find game over music
         //me.audio.stopTrack();
-		//me.audio.playTrack("geom-dash-blast-processing");
+		//me.audio.playTrack("menu");
 
 		me.game.world.addChild(new me.ColorLayer("background", "#000000"), 0);
 

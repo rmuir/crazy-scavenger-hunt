@@ -7,7 +7,7 @@ game.StoryScreen = me.Stage.extend({
 
         //me.audio.stopTrack();
         // TODO: need diff music for story, more somber
-        //me.audio.playTrack("geom-dash-menu");
+        //me.audio.playTrack("menu");
 
         // title screen
         var backgroundImage = new me.Sprite(0, 0, {

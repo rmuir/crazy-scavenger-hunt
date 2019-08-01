@@ -6,7 +6,7 @@ game.TitleScreen = me.Stage.extend({
     onResetEvent : function() {
 
         me.audio.stopTrack();
-        me.audio.playTrack("geom-dash-menu");
+        me.audio.playTrack("menu");
 
         // title screen
         var backgroundImage = new me.Sprite(0, 0, {

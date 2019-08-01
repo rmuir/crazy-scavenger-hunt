@@ -5,9 +5,8 @@ game.GameOverScreen = me.Stage.extend({
 	onResetEvent: function() {	
 		
 		// play the audio track
-		// TODO: find game over music
-        //me.audio.stopTrack();
-		//me.audio.playTrack("geom-dash-blast-processing");
+   /me.audio.stopTrack();
+		me.audio.playTrack("gameover");
 
 		me.game.world.addChild(new me.ColorLayer("background", "#000000"), 0);
 
