@@ -24,6 +24,7 @@ game.PlayScreen = me.Stage.extend({
 					case me.input.KEY.NUM4: n = 4; break;
 					case me.input.KEY.NUM5: n = 5; break;
 				}
+				game.displayText("Cheated to level " + n);
 				me.levelDirector.loadLevel("area0" + n);
 			}
 		});

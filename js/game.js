@@ -10,8 +10,20 @@ var game = {
         // life total, aka "beers"
         life: 5,
         // liquor to throw shots from
-        liquor: 0
+        liquor: 0,
+
+        centerText: null
 	},
+
+    "displayText" : function(text) {
+	    console.log("Setting center text: " + text);
+        game.data.centerText = text;
+        me.game.repaint();
+        me.timer.setTimeout(function() {
+            game.data.centerText = null;
+            me.game.repaint();
+        }, 3000);
+    },
 
     // Run on page load.
     "onload" : function () {
@@ -106,12 +118,16 @@ var game = {
                     case me.input.KEY.C: state = me.state.CREDITS; break;
                     case me.input.KEY.W: state = me.state.GAME_END; break;
                 }
+                game.displayText("Cheat code accepted");
                 me.state.change(state);
             } else if (action == "ammo") {
+                game.displayText("Cheat code accepted");
                 console.log("CHEAT: 16 shots");
                 game.data.liquor = 16;
             }
         });
+
+        me.game.world.addChild(new game.HUD.CenterTextItem());
 
         // play per-level audio file
         me.game.onLevelLoaded = function(level) {

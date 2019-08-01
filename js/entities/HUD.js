@@ -50,6 +50,40 @@ game.HUD.Container = me.Container.extend({
 	}
 });
 
+game.HUD.CenterTextItem = me.Renderable.extend({
+	init: function () {
+
+		this._super(me.Renderable, 'init', [0, 0, me.game.viewport.width, me.game.viewport.height]);
+
+		this.anchorPoint.set(0, 0);
+		// persistent across level change
+		this.isPersistent = true;
+
+		// make sure we use screen coordinates
+		this.floating = true;
+
+		this.font = new me.Text(0, 0, {
+			"font": "Comic Sans MS",
+			"size": 40,
+			"fillStyle": "#ffffff",
+			"textAlign": "center",
+			"textBaseline": "middle"
+		});
+	},
+
+	update : function () {
+		return true;
+	},
+
+	draw: function (renderer) {
+
+		console.log("drawning center text: " + game.data.centerText);
+		if (game.data.centerText != null) {
+			this.font.draw(renderer, game.data.centerText, me.game.viewport.width / 2, me.game.viewport.height / 2);
+		}
+	}
+});
+
 
 /**
  * a basic HUD item to display score
