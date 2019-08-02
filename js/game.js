@@ -3,10 +3,10 @@
 // eslint-disable-next-line no-redeclare
 var game = {
 
-	// an object where to store game information
-	data : {
-		// score
-		score : 0,
+  // an object where to store game information
+  data : {
+    // score
+    score : 0,
         // life total, aka "beers"
         life: 5,
         // liquor to throw shots from
@@ -15,10 +15,10 @@ var game = {
         centerText: null,
 
         cheatEnabled: false
-	},
+  },
 
     "displayText" : function(text) {
-	    //console.log("Setting center text: " + text);
+      //console.log("Setting center text: " + text);
         game.data.centerText = text;
         me.game.repaint();
         me.timer.setTimeout(function() {
@@ -28,8 +28,8 @@ var game = {
     },
 
     "cheatEnabled": function(text) {
-	    game.data.cheatEnabled = true;
-	    me.timer.setTimeout(function () {
+      game.data.cheatEnabled = true;
+      me.timer.setTimeout(function () {
             game.data.cheatEnabled = false;
         }, 2000);
     },
@@ -59,9 +59,9 @@ var game = {
     },
 
     "loseLife": function() {
-	    game.data.life -= 1;
-	    if (game.data.life <= 0) {
-	      me.state.change(me.state.GAMEOVER);
+      game.data.life -= 1;
+      if (game.data.life <= 0) {
+        me.state.change(me.state.GAMEOVER);
       }
     },
 
@@ -69,9 +69,9 @@ var game = {
       if (game.data.score > me.save.score) {
         me.save.score = game.data.score;
       }
-	    game.data.score = 0;
-	    game.data.life = 5;
-	    game.data.liquor = 0;
+      game.data.score = 0;
+      game.data.life = 5;
+      game.data.liquor = 0;
     },
 
     // Run on game resources loaded.
@@ -83,38 +83,38 @@ var game = {
         me.state.set(me.state.CREDITS, new game.CreditsScreen());
         me.state.set(me.state.GAME_END, new game.GameEndScreen());
 
-		// add our player entity in the entity pool
-		me.pool.register("mainPlayer", game.PlayerEntity);
-		me.pool.register("CoinEntity", game.CoinEntity);
+    // add our player entity in the entity pool
+    me.pool.register("mainPlayer", game.PlayerEntity);
+    me.pool.register("CoinEntity", game.CoinEntity);
         me.pool.register("LiquorEntity", game.LiquorEntity);
         me.pool.register("ShotEntity", game.ShotEntity);
-		me.pool.register("EnemyEntity", game.EnemyEntity);
+    me.pool.register("EnemyEntity", game.EnemyEntity);
         me.pool.register("MiniBossEntity", game.MiniBossEntity);
         me.pool.register("BossEntity", game.BossEntity);
 
-		// enable the keyboard
-		me.input.bindKey(me.input.KEY.LEFT,		"left");
-		me.input.bindKey(me.input.KEY.RIGHT,	"right");
-		// map X, Up Arrow and Space for jump1
-		me.input.bindKey(me.input.KEY.X,		"jump", true);
-		me.input.bindKey(me.input.KEY.UP,		"jump", true);
-		me.input.bindKey(me.input.KEY.SPACE,	"jump", true);
+    // enable the keyboard
+    me.input.bindKey(me.input.KEY.LEFT,   "left");
+    me.input.bindKey(me.input.KEY.RIGHT,  "right");
+    // map X, Up Arrow and Space for jump1
+    me.input.bindKey(me.input.KEY.X,    "jump", true);
+    me.input.bindKey(me.input.KEY.UP,   "jump", true);
+    me.input.bindKey(me.input.KEY.SPACE,  "jump", true);
         // shoot!
-        me.input.bindKey(me.input.KEY.Z,		"shoot", true);
+        me.input.bindKey(me.input.KEY.Z,    "shoot", true);
 
-		// cheat codes
-        me.input.bindKey(me.input.KEY.NUM1,		"levelchange", true, true);
-        me.input.bindKey(me.input.KEY.NUM2,		"levelchange", true, true); 
-        me.input.bindKey(me.input.KEY.NUM3,		"levelchange", true, true);
-        me.input.bindKey(me.input.KEY.NUM4,		"levelchange", true, true);
-        me.input.bindKey(me.input.KEY.NUM5,		"levelchange", true, true);
-        me.input.bindKey(me.input.KEY.M,		"goto", true, true);
-        me.input.bindKey(me.input.KEY.B,		"goto", true, true);
-        me.input.bindKey(me.input.KEY.P,		"goto", true, true);
-        me.input.bindKey(me.input.KEY.G,		"goto", true, true);
-        me.input.bindKey(me.input.KEY.C,		"goto", true, true);
-        me.input.bindKey(me.input.KEY.W,		"goto", true, true);
-        me.input.bindKey(me.input.KEY.A,		"ammo", true, true);
+    // cheat codes
+        me.input.bindKey(me.input.KEY.NUM1,   "levelchange", true, true);
+        me.input.bindKey(me.input.KEY.NUM2,   "levelchange", true, true); 
+        me.input.bindKey(me.input.KEY.NUM3,   "levelchange", true, true);
+        me.input.bindKey(me.input.KEY.NUM4,   "levelchange", true, true);
+        me.input.bindKey(me.input.KEY.NUM5,   "levelchange", true, true);
+        me.input.bindKey(me.input.KEY.M,    "goto", true, true);
+        me.input.bindKey(me.input.KEY.B,    "goto", true, true);
+        me.input.bindKey(me.input.KEY.P,    "goto", true, true);
+        me.input.bindKey(me.input.KEY.G,    "goto", true, true);
+        me.input.bindKey(me.input.KEY.C,    "goto", true, true);
+        me.input.bindKey(me.input.KEY.W,    "goto", true, true);
+        me.input.bindKey(me.input.KEY.A,    "ammo", true, true);
         me.input.bindKey(me.input.KEY.C,        "enablecheat", true);
 
         me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge) {
