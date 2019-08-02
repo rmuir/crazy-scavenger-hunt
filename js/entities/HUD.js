@@ -1,11 +1,7 @@
-
-
 /**
  * a HUD container and child items
  */
-
 game.HUD = game.HUD || {};
-
 
 game.HUD.Container = me.Container.extend({
 
@@ -52,7 +48,6 @@ game.HUD.Container = me.Container.extend({
 
 game.HUD.CenterTextItem = me.Renderable.extend({
   init: function () {
-
     this._super(me.Renderable, 'init', [0, 0, me.game.viewport.width, me.game.viewport.height]);
 
     this.anchorPoint.set(0, 0);
@@ -76,7 +71,6 @@ game.HUD.CenterTextItem = me.Renderable.extend({
   },
 
   draw: function (renderer) {
-
     //console.log("drawning center text: " + game.data.centerText);
     if (game.data.centerText != null) {
       this.font.draw(renderer, game.data.centerText, me.game.viewport.width / 2, me.game.viewport.height / 2);
@@ -93,7 +87,6 @@ game.HUD.ScoreItem = me.Renderable.extend( {
    * constructor
    */
   init: function(x, y) {
-
     // call the parent constructor
     // (size does not matter here)
     this._super(me.Renderable, 'init', [x, y, 10, 10]);
@@ -101,9 +94,9 @@ game.HUD.ScoreItem = me.Renderable.extend( {
     // create the font object
     this.font = new me.BitmapFont(me.loader.getBinary('PressStart2P'), me.loader.getImage('PressStart2P'));
 
-        // font alignment to right, bottom
-        this.font.textAlign = "right";
-        this.font.textBaseline = "bottom";
+    // font alignment to right, bottom
+    this.font.textAlign = "right";
+    this.font.textBaseline = "bottom";
 
     // local copy of the global score
     this.score = -1;
@@ -128,7 +121,6 @@ game.HUD.ScoreItem = me.Renderable.extend( {
   draw : function (renderer) {
     this.font.draw (renderer, game.data.score, me.game.viewport.width + this.pos.x, this.pos.y);
   }
-
 });
 
 /**
