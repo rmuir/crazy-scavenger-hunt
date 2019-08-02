@@ -9,6 +9,7 @@ game.PlayerEntity = me.Entity.extend({
   init : function (x, y, settings) {
     // call the constructor
     this._super(me.Entity, 'init', [x, y , settings]);
+    this.name = "mainPlayer";
     this.body.collisionType = me.collision.types.PLAYER_OBJECT;
 
     // set the default horizontal & vertical speed (accel vector)
@@ -31,6 +32,10 @@ game.PlayerEntity = me.Entity.extend({
     this.immunetimer = -1;
 
     this.facingLeft = false;
+  },
+
+  testmethod: function() {
+    console.log("called test method");
   },
 
   /**
@@ -404,12 +409,16 @@ game.MiniBossEntity = me.Entity.extend({
     // no coins for enemies
     this.body.setCollisionMask(this.body.collisionMask & ~me.collision.types.COLLECTABLE_OBJECT);
 
-    // jump every second
-    this.jumptimer = 1000;
+    this.stucktimer = -1; // not stuck initially
+
+    this.smalljumps = 5000; // small jump until we detect the player
+    this.playerDetected = false;
 
     this.life = 3;
     this.immune = false;
     this.immunetimer = -1;
+
+    this.playerEntity = null;
   },
 
   hit : function() {
@@ -441,26 +450,56 @@ game.MiniBossEntity = me.Entity.extend({
   // manage the enemy movement
   update : function (dt) {
     if (this.alive) {
-      if (this.walkLeft && this.pos.x <= this.startX) {
-        this.walkLeft = false;
-      } else if (!this.walkLeft && this.pos.x >= this.endX) {
-        this.walkLeft = true;
+
+      if (!this.playerDetected) {
+        if (this.playerEntity == null) {
+          this.playerEntity = me.game.world.getChildByProp("name", "mainPlayer")[0];
+        }
+
+        let playerBase = this.playerEntity.pos.y + this.playerEntity.getBounds().height;
+        let thisBase = this.pos.y + this.getBounds().height;
+        if (playerBase < thisBase) {
+          console.log("player detected for mini boss");
+          // reached the platform height
+          this.playerDetected = true;
+          this.smalljumps = 5;
+        }
       }
 
-      this.renderable.flipX(this.walkLeft);
-      this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
+      this.stucktimer -= dt;
+      if (this.stucktimer <= 0) {
+        if (this.walkLeft && this.pos.x <= this.startX) {
+          this.walkLeft = false;
+        } else if (!this.walkLeft && this.pos.x >= this.endX) {
+          this.walkLeft = true;
+        }
 
-      /*this.jumptimer -= dt;
-        if (this.jumptimer <= 0) {*/
-      if (!this.body.jumping && !this.body.falling) {
-        // set current vel to the maximum defined value
-        // gravity will then do the rest
-        this.body.vel.y = -this.body.maxVel.y * me.timer.tick;
-        // set the jumping flag
-        this.body.jumping = true;
+        this.renderable.flipX(this.walkLeft);
+        this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
+
+        if (!this.body.jumping && !this.body.falling) {
+          let y = this.body.maxVel.y;
+          this.smalljumps -= 1;
+          if (this.smalljumps > 0) {
+            y *= 0.5;
+          }
+          if (this.smalljumps < 0) {
+            // just landed big jump, shake the screen and set stuck timer
+            this.stucktimer = 3000;
+            this.immune = false;
+            this.smalljumps = 5;
+            this.body.vel.x = 0;
+            this.body.vel.y = 0;
+            me.device.vibrate(75);
+          } else {
+            // set current vel to the maximum defined value
+            // gravity will then do the rest
+            this.body.vel.y = -y * me.timer.tick;
+            // set the jumping flag
+            this.body.jumping = true;
+          }
+        }
       }
-      this.jumptimer = 1000;
-       //}
     } else {
       this.body.vel.x = 0;
     }
