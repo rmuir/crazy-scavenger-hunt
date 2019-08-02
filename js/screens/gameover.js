@@ -1,9 +1,9 @@
 game.GameOverScreen = me.Stage.extend({
-  /** 
+  /**
    *  action to perform on state change
    */
-  onResetEvent: function() {  
-    
+  onResetEvent : function() {
+
     // play the audio track
     me.audio.stopTrack();
     me.audio.playTrack("gameover");

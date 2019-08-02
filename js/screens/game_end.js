@@ -1,9 +1,9 @@
 game.GameEndScreen = me.Stage.extend({
-  /** 
+  /**
    *  action to perform on state change
    */
-  onResetEvent: function() {  
-    
+  onResetEvent : function() {
+
     // play the audio track
     me.audio.stopTrack();
     me.audio.playTrack("game_end");
@@ -45,6 +45,6 @@ game.GameEndScreen = me.Stage.extend({
   },
 
   onDestroyEvent: function() {
-      me.timer.clearTimeout(this.creditsTimer);
-    }
+    me.timer.clearTimeout(this.creditsTimer);
+  }
 });

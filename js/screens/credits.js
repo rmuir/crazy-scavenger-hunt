@@ -1,8 +1,8 @@
 game.CreditsScreen = me.Stage.extend({
-  /** 
+  /**
    *  action to perform on state change
    */
-  onResetEvent: function() {
+  onResetEvent : function() {
 
     me.game.world.addChild(new me.ColorLayer("background", "#000000"), 0);
 
@@ -72,7 +72,4 @@ game.CreditsScreen = me.Stage.extend({
       }
     })), 2);
   },
-  
-  
-
 });

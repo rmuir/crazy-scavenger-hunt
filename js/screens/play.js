@@ -1,15 +1,15 @@
 game.PlayScreen = me.Stage.extend({
-  /** 
+  /**
    *  action to perform on state change
    */
-  onResetEvent: function() {  
-    
-        // load a level
+  onResetEvent : function() {
+
+    // load a level
     me.levelDirector.loadLevel("area01");
-    
+
     // reset the score
     game.reset();
-    
+
     // add our HUD to the game world
     this.HUD = new game.HUD.Container();
     me.game.world.addChild(this.HUD);
@@ -29,9 +29,8 @@ game.PlayScreen = me.Stage.extend({
       }
     });
   },
-  
-  
-  /** 
+
+  /**
    *  action to perform when leaving this screen (state change)
    */
   onDestroyEvent: function() {
