@@ -13,7 +13,7 @@ game.PlayerEntity = me.Entity.extend({
     this.body.collisionType = me.collision.types.PLAYER_OBJECT;
 
     // set the default horizontal & vertical speed (accel vector)
-    this.body.setVelocity(3, 16.5);
+    this.body.setVelocity(3, 17);
 
     // set the display to follow our position on both axis
     me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH, 0.4);
@@ -32,10 +32,6 @@ game.PlayerEntity = me.Entity.extend({
     this.immunetimer = -1;
 
     this.facingLeft = false;
-  },
-
-  testmethod: function() {
-    console.log("called test method");
   },
 
   /**
@@ -108,8 +104,19 @@ game.PlayerEntity = me.Entity.extend({
     return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
   },
 
-  shake: function() {
+  shake: function(y) {
+    if (!this.body.jumping && !this.body.falling &&
+      (this.pos.y + this.getBounds().height) === y) {
+      this.hit();
+    }
+  },
 
+  hit: function() {
+    // let's flicker in case we touched an enemy
+    this.renderable.flicker(3000);
+    this.immunetimer = 3000;
+    this.immune = true;
+    game.loseLife();
   },
 
   /**
@@ -138,8 +145,9 @@ game.PlayerEntity = me.Entity.extend({
         }
         break;
       case me.collision.types.ENEMY_OBJECT:
-        if ((response.overlapV.y>0) && !this.body.jumping && !this.immune && 'hit' in other) {
-          //console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", type = " + other.constructor.name + ", collision = " + other.body.collisionType);
+        //console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + this.body.jumping + ", collision = " + other.body.collisionType);
+        if ((response.overlapV.y>=0) && !this.body.jumping && !this.immune && 'hit' in other) {
+          //console.log("HItting enemy");
           this.immunetimer = 1000;
           this.immune = true;
           // bounce (force jump)
@@ -150,12 +158,9 @@ game.PlayerEntity = me.Entity.extend({
           // play some audio
           me.audio.play("stomp");
           other.hit();
+          return true;
         } else if (!this.immune) {
-          // let's flicker in case we touched an enemy
-          this.renderable.flicker(2000);
-          this.immunetimer = 2000;
-          this.immune = true;
-          game.loseLife();
+          this.hit();
         }
         return false;
       default:
@@ -423,6 +428,7 @@ game.MiniBossEntity = me.Entity.extend({
     this.immunetimer = -1;
 
     this.playerEntity = null;
+    this.stuckanim = null;
   },
 
   hit : function() {
@@ -489,11 +495,17 @@ game.MiniBossEntity = me.Entity.extend({
           }
           if (this.smalljumps < 0) {
             // just landed big jump, shake the screen and set stuck timer
-            this.stucktimer = 3000;
+            this.stucktimer = 6000;
             this.immune = false;
             this.smalljumps = 5;
             this.body.vel.x = 0;
             this.body.vel.y = 0;
+            this.playerEntity.shake(this.pos.y + this.getBounds().height);
+            me.game.viewport.shake(30, 1500, me.game.viewport.AXIS.BOTH, function() {}, false);
+            let originalY = this.body.pos.y;
+            let stuckY = originalY + this.getBounds().height / 2;
+            this.stuckanim = new me.Tween(this.body.pos).to({y: stuckY}, 500)
+              .onComplete(this.stayTimer.bind(this, originalY)).start();
             me.device.vibrate(75);
           } else {
             // set current vel to the maximum defined value
@@ -521,7 +533,27 @@ game.MiniBossEntity = me.Entity.extend({
     me.collision.check(this);
 
     // return true if we moved or if the renderable was updated
-    return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
+    return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0 || this.stuckanim !== null);
+  },
+
+  stayTimer : function(originalY) {
+    this.stuckanim = me.timer.setTimeout(this.unstickAnim.bind(this, originalY), 5000);
+  },
+
+  unstickAnim : function(originalY) {
+    this.stuckanim = new me.Tween(this.body.pos).to({y: originalY}, 2500)
+      .onComplete(this.removeAnim.bind(this)).start();
+  },
+
+  removeAnim : function() {
+    this.stuckanim = null;
+  },
+
+  onDestroyEvent : function() {
+    //just in case
+    if (this.storyanim != null) {
+      this.storyanim.stop();
+    }
   },
 
   /**
