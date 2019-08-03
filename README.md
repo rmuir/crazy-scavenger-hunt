@@ -19,7 +19,6 @@ Angry birds. Flappy birds. Candy Crush. All those other games are so boring comp
 ```
 
 https://www.gish.com/specs/
-Official tasks of this hunt: https://docs.google.com/spreadsheets/d/1qWXADzQG-Ajarz3giAg_WU-H-nkT62H7v8L3rAijnew/edit#gid=0
 
 It must uses one mascot, so i thought make "Adventures of Assbutt" as the name of our game.
 
