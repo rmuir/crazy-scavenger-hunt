@@ -1,5 +1,7 @@
 Game for ex-girlfriend's crazy scavenger hunt.
 
+Play the game: https://assbutt.net
+
 It uses melonjs as the "engine"
 Its based on this tutorial: https://melonjs.github.io/tutorial-platformer/
 
