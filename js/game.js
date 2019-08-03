@@ -87,6 +87,7 @@ var game = {
     me.pool.register("CoinEntity", game.CoinEntity);
     me.pool.register("LiquorEntity", game.LiquorEntity);
     me.pool.register("ShotEntity", game.ShotEntity);
+    me.pool.register("SpikesEntity", game.SpikesEntity);
     me.pool.register("EnemyEntity", game.EnemyEntity);
     me.pool.register("MiniBossEntity", game.MiniBossEntity);
     me.pool.register("BossEntity", game.BossEntity);

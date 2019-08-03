@@ -108,6 +108,10 @@ game.PlayerEntity = me.Entity.extend({
     return (this._super(me.Entity, 'update', [dt]) || this.body.vel.x !== 0 || this.body.vel.y !== 0);
   },
 
+  shake: function() {
+
+  },
+
   /**
    * colision handler
    */
@@ -134,7 +138,7 @@ game.PlayerEntity = me.Entity.extend({
         }
         break;
       case me.collision.types.ENEMY_OBJECT:
-        if ((response.overlapV.y>0) && !this.body.jumping && !this.immune) {
+        if ((response.overlapV.y>0) && !this.body.jumping && !this.immune && 'hit' in other) {
           //console.log("ENEMY: overlap = " + response.overlapV.y + ", jumping = " + other.body.jumping + ", type = " + other.constructor.name + ", collision = " + other.body.collisionType);
           this.immunetimer = 1000;
           this.immune = true;
@@ -662,5 +666,12 @@ game.BossEntity = me.Entity.extend({
     // and be loud about it, shake the phone, etc
     me.device.vibrate(75);
      return true;
+  }
+});
+
+game.SpikesEntity = me.Entity.extend({
+
+  init: function (x, y, settings) {
+    this._super(me.Entity, 'init', [x, y , settings]);
   }
 });
