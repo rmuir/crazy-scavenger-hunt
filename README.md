@@ -4,7 +4,7 @@ It uses melonjs as the "engine"
 Its based on this tutorial: https://melonjs.github.io/tutorial-platformer/
 
 Sprites are derived from images on https://www.gish.com/meet-the-assbutt/ and http://www.gish.com/meet-possubull/
-Background music is public domain from https://archive.org/details/geometry_dash_1.9/
+Background music is public domain from https://freepd.com
 
 Do this to run it:
 
